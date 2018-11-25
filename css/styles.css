@@ -1,11 +1,163 @@
+/* ---------------------------------------- */
+/* ==            SUMMARY              */
+/*---------------------------------------- */
+
+/* L        -          summary */
+/* L         -      color codes*/
+/* L        -       Break-points*/
+/* L        -      définition des polices*/
+/* L        -       Eléments principaux*/
+/* L        -      header*/
+/* L        -      Slider*/
+
+
+/* ---------------------------------------- */
+/* ==       COLOR CODES           */
+/*---------------------------------------- */
+/*
+gris foncé :              #363530
+gris clair:               #888a80
+White (text):               #FFF
+bleu foncé:                    #3364FE
+bleu clair:                     #88c5d6
+
+*/
+/*---------------------------------------- */
+/* **       DEFINITION DES BREAK-POINT  */
+/* --------------------------------------- */
+/*
+grands écrants          >980 px
+tablettes               600<largeur<980px
+smartphones             <600 px
+/*
+
+
+/* ---------------------------------------- */
+/* == ÉLÉMENTS PRINCIPAUX  POLICES         */
+/*---------------------------------------- */
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: auto;
+  width: 100%;
+  font-size: 16px;
+  background-color: #3e3f49;
+  background: url(../images/velo.jpg);
+  background-position: top;
+  width: 100%;
+  background-attachment: fixed;
+  height: auto;
+  background-size: cover;
+  background-attachment: fixed;
+
+}
+
+h1,
+h2,
+h3 {
+  color: #3364FE;
+  font-size: 2.5em;
+  text-align: left;
+  font-weight: bold;
+  line-height: 1em;
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+/* ---------------------------------------- */
+/* ==                HEADER                */
+/*---------------------------------------- */
+header {
+  background-color: #363530;
+  background-position: top;
+  width: 23%;
+  margin-top: 50px;
+  margin-left: 50px;
+  padding: 90px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+header h1 {
+  z-index: 2;
+  margin: auto;
+  font-size: 3em;
+  text-align: center;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  margin-top: 20px;
+  line-height: 2em;
+
+}
+
+
+header p {
+  z-index: 1.5;
+  margin: auto;
+  text-align: center;
+  font-size: 2em;
+  color: #88c5d6;
+  line-height: 2em;
+}
+
+
+#logo {
+  width: 150px;
+  height: 150px;
+
+}
+
+/*-----------------presentation--------------*/
+
+#corps {
+  width: 100%;
+  margin-top: -100px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+
+
+
+
+#presentationslider {
+
+  width: 68%;
+  padding-bottom: 90px;
+  padding-top: 90px;
+  background-color: #888a80;
+  margin-right: 50px;
+  float: right;
+  align-self: end;
+
+}
+
+
+
+
+
+/* ---------------------------------------- */
+/* ==           SLIDER                      */
+/*---------------------------------------- */
 #slider {
-  border: 1px solid red;
+
   position: relative;
-  height: 400px;
+  height: 500px;
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 74%;
+  outline: 4px outset rgba(54, 53, 48, 0.77);
+
+
+  box-shadow: 4px 4px 2px 0px #363530;
+
+
+
+
+
 
 }
 
@@ -13,7 +165,7 @@ ul {
   position: relative;
   list-style: none;
   justify-content: flex-start;
-  height: 400px;
+  height: 500px;
   margin-top: 0;
   margin-left: -100%;
   margin-right: 0;
@@ -28,28 +180,75 @@ li {
   padding: 0;
   position: relative;
   display: block;
-  height: 400px;
+  height: 500px;
 }
 
+figcaption p {
+
+  font-size: 2em;
+  color: #363530 !important;
+  margin-top: 0;
+  padding: 30px;
+}
+
+figure img {
+  width: auto;
+  height: 61%;
+  margin-left: 30%;
+}
+
+
 #slide1 {
-  background-color: aqua;
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image5.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#slide1 figure img {
+  width: auto;
+  height: 30%;
+  margin-left: 15%;
 }
 
 #slide2 {
 
-  background-color: green;
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
 
 }
 
 #slide3 {
 
-  background-color: red;
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+
 
 }
 
+
 #slide4 {
 
-  background-color: coral;
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image3.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+#slide5 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image4.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 
 }
 
@@ -69,7 +268,7 @@ li {
 .fa-angle-left {
   font-size: 2.5em;
   margin: auto;
-  color: white;
+  color: #3364FE;
   text-align: center;
   vertical-align: middle;
 }
@@ -77,14 +276,14 @@ li {
 .fa-angle-right {
   font-size: 2.5em;
   z-index: 10;
-  color: white;
+  color: #3364FE;
   text-align: center;
   vertical-align: middle;
 }
 
 #control {
   font-size: 2em;
-  color: white;
+  color: #3364FE;
   position: absolute;
   bottom: 30px;
   left: 30px;

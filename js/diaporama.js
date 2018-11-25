@@ -32,7 +32,7 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl) {
       return largeurCont;
     },
     Slider.prototype.taille = function () {
-      for (i = 1; i <= 4; i++) {
+      for (i = 1; i <= this.nbImages; i++) {
         $("#slide" + i).css('width', 100 / nbImages + "%")
       };
       $(this.enfantUn()).css('width', (this.largeurContenant() + "%"));
@@ -76,12 +76,12 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl) {
 
   Slider.prototype.commandeRecul = function () {
       clearInterval(entreDeux);
-      this.moveLeft();
+      this.moveRight();
       this.imageReste();
     },
     Slider.prototype.commandeAvance = function () {
       clearInterval(entreDeux);
-      this.moveRight();
+      this.moveLeft();
       this.imageReste();
     },
     Slider.prototype.commandePause = function () {
@@ -104,7 +104,7 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl) {
 //le nombre d'images du slider        ici 4
 //l'id des controles                  ici #control
 
-var slider = new Slider("#slider", 5000, 50, 4, "#control");
+var slider = new Slider("#slider", 5000, 50, 5, "#control");
 
 var entreDeux;
 slider.taille();
