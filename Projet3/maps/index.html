@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Display a map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="styles.css">
+  <script src="ajax.js"></script>
+  <script src="maps.js"></script>
+</head>
+
+<body>
+
+  <div id='map'></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuZHJpbmVjbG9pdHJlIiwiYSI6ImNqb3hkbDA2MTIwcW4zcWtmczVwc3AwdzgifQ.4N5vPPly6YgI0851NyPobQ';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/sandrinecloitre/cjoy762bocxrl2rp6pb0ob7qc',
+      center: [5.387092, 43.296867],
+      zoom: 13.5
+    });
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+
+  </script>
+
+</body>
+
+</html>

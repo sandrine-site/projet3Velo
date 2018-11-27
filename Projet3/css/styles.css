@@ -1,0 +1,439 @@
+/* ---------------------------------------- */
+/* ==            SUMMARY              */
+/*---------------------------------------- */
+
+/* L        -          summary */
+/* L         -      color codes*/
+/* L        -       Break-points*/
+/* L        -      définition des polices*/
+/* L        -       Eléments principaux*/
+/* L        -      header*/
+/* L        -      Slider*/
+
+
+/* ---------------------------------------- */
+/* ==       COLOR CODES           */
+/*---------------------------------------- */
+/*
+gris foncé :              #363530
+gris clair:               #888a80
+White (text):               #FFF
+bleu foncé:                    #3364FE
+bleu clair:                     #88c5d6
+
+*/
+/*---------------------------------------- */
+/* **       DEFINITION DES BREAK-POINT  */
+/* --------------------------------------- */
+/*
+grands écrants          >980 px
+tablettes               600<largeur<980px
+smartphones             <600 px
+/*
+
+
+/* ---------------------------------------- */
+/* == ÉLÉMENTS PRINCIPAUX  POLICES         */
+/*---------------------------------------- */
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: auto;
+  width: 100%;
+  font-size: 16px;
+  background-color: #3e3f49;
+  background: url(../images/velo.jpg);
+  background-position: top;
+  width: 100%;
+  background-attachment: fixed;
+  height: auto;
+  background-size: cover;
+  background-attachment: fixed;
+
+}
+
+h1,
+h2,
+h3 {
+  color: #3364FE;
+  font-size: 2.5em;
+  text-align: left;
+  font-weight: bold;
+  line-height: 1em;
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+/* ---------------------------------------- */
+/* ==                HEADER                */
+/*---------------------------------------- */
+header {
+  background-color: #363530;
+  background-position: top;
+  width: 23%;
+  margin-top: 50px;
+  margin-left: 50px;
+  padding: 90px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+header h1 {
+  z-index: 2;
+  margin: auto;
+  font-size: 3em;
+  text-align: center;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  margin-top: 20px;
+  line-height: 2em;
+
+}
+
+
+header p {
+  z-index: 1.5;
+  margin: auto;
+  text-align: center;
+  font-size: 2em;
+  color: #88c5d6;
+  line-height: 2em;
+}
+
+
+#logo {
+  width: 150px;
+  height: 150px;
+
+}
+
+/*-----------------presentation--------------*/
+
+#corps {
+  width: 100%;
+  margin-top: -100px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+
+
+
+
+#presentationslider {
+
+  width: 68%;
+  padding-bottom: 90px;
+  padding-top: 90px;
+  background-color: #888a80;
+  margin-right: 50px;
+  float: right;
+  align-self: end;
+
+}
+
+
+
+
+
+/* ---------------------------------------- */
+/* ==           SLIDER                      */
+/*---------------------------------------- */
+#slider {
+
+  position: relative;
+  height: 500px;
+    overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  width: 74%;
+  outline: 4px outset rgba(54, 53, 48, 0.77);
+
+
+  box-shadow: 4px 4px 2px 0px #363530;
+
+
+
+
+
+
+}
+
+ul {
+  position: relative;
+  list-style: none;
+  justify-content: flex-start;
+  height: 500px;
+  margin-top: 0;
+  margin-left: -100%;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding: 0;
+
+}
+
+li {
+  float: left;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: block;
+  height: 500px;
+}
+
+figcaption p {
+
+  font-size: 2em;
+  color: #363530 !important;
+  margin-top: 0;
+  padding: 30px;
+}
+
+figure img {
+  width: auto;
+  height: 61%;
+  margin-left: 30%;
+}
+
+
+#slide5 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image5.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#slide5 figure img {
+  width: auto;
+  height: 30%;
+  margin-left: 15%;
+}
+
+#slide5 figcaption p {
+
+  display: block;
+  animation: linear defile 5s;
+  animation-delay: 12s;
+  margin-left: 0%;
+  text-align: left;
+  animation-fill-mode: backwards;
+  white-space: pre;
+
+}
+
+#slide1 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image1.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+
+#slide1 figcaption p {
+
+  display: block;
+  animation: linear defile 5s;
+  margin-left: 0%;
+  text-align: left;
+  white-space: nowrap;
+  animation-fill-mode: backwards;
+
+}
+
+@-webkit-keyframes defile {
+
+  0%,
+  100% {
+    margin-left: 100%;
+  }
+
+  99.99% {
+    margin-left: 5%;
+  }
+}
+
+
+#slide2 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+#slide2 figcaption p {
+
+  display: block;
+  animation: linear defile 5s;
+  animation-delay: 5s;
+  margin-left: 0%;
+  text-align: left;
+  animation-fill-mode: backwards;
+  white-space: pre;
+
+}
+
+#slide3 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image3.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+
+#slide3 figcaption p {
+
+  display: block;
+  animation: linear defile 5s;
+  animation-delay: 10s;
+  margin-left: 0%;
+  text-align: left;
+  animation-fill-mode: backwards;
+  white-space: pre;
+
+}
+
+
+#slide4 {
+
+  background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image4.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#slide4 figcaption p {
+
+  display: block;
+  animation: linear defile 5s;
+  animation-delay: 15s;
+  margin-left: 0%;
+  text-align: left;
+  animation-fill-mode: backwards;
+  white-space: pre;
+
+}
+
+#commandeManuelle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 2;
+
+}
+
+.fa-angle-left {
+  font-size: 2.5em;
+  margin: auto;
+  color: #3364FE;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.fa-angle-right {
+  font-size: 2.5em;
+  z-index: 10;
+  color: #3364FE;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#control {
+  font-size: 2em;
+  color: #3364FE;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  z-index: 3;
+
+}
+
+#commandeManuelle,
+#control {
+  visibility: hidden;
+}
+
+#slider:hover #commandeManuelle,
+#slider:hover #control {
+  visibility: visible;
+}
+
+#flecheavance {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  margin-left: 25px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+
+}
+
+#flecherecul {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  margin-right: 25px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+}
+
+#slider:hover #flecheavance,
+#slider:hover #flecherecul,
+#slider:hover #control {
+  background-color: rgba(140, 140, 140, 0.2);
+
+}
+
+#flecheavance:hover {
+  width: 100px;
+  height: 100px;
+  margin-left: 0;
+
+}
+
+#flecherecul:hover {
+  width: 100px;
+  height: 100px;
+
+  margin-right: 0px;
+}
+
+#control {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  margin-left: 25px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+
+}
+
+#control:hover {
+  width: 100px;
+  height: 100px;
+  bottom: 5px;
+  left: 5px;
