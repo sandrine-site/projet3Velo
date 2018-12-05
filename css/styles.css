@@ -510,7 +510,6 @@ figure img {
   padding: 5%;
   line-height: 2em;
   visibility: hidden;
-  padding-bottom: 5%;
   margin-top: -33px;
 }
 
@@ -591,4 +590,29 @@ canvas {
   margin-top: 10px;
   cursor: url(../images/pen-cursor.png),
     pointer;
+}
+
+/* ---------------------------------------- */
+/* ==           MESSAGE                   */
+/*---------------------------------------- */
+#presentationMessage {
+
+  width: 55%;
+  z-index: 14;
+  padding: 5%;
+  line-height: 2em;
+  visibility: hidden;
+  background-color: #363530;
+  align-self: flex-start;
+  margin-top: -5%;
+}
+
+#presentationMessage h3 {
+  font-size: 1.2em;
+
+}
+
+#presentationMessage p {
+  color: #88c5d6;
+
 }
