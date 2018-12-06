@@ -1,9 +1,8 @@
-
-
-
-
 var len;
 var localStorage;
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array();
 
 function init() {
 
@@ -50,9 +49,7 @@ function init() {
 
 
   //enregistrement de la position de la sourisdans ainsi que du glissement un tableau;
-  var clickX = new Array();
-  var clickY = new Array();
-  var clickDrag = new Array();
+
   len = clickX.length;
 
   function addClick(x, y, dragging) {
@@ -79,79 +76,100 @@ function init() {
     }
   }
 }
+
+function clearCanvas() {
+  var body = document.getElementById("body");
+  var canvas = document.getElementById("signature");
+  var context = canvas.getContext("2d");
+  var dessin = document.getElementById("dessin");
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  clickX = [];
+  clickY = [];
+  clickDrag = [];
+}
 //Lancement de la fonction signature (init) quand tous est prêt
 window.onload = init
-
+temps = 1200;
+var textetemps = ""
 //Validation du formulaire et affichage du message de confirmation
 var compteur = 0;
 var form = document.querySelector("form");
+form.addEventListener("reset", function (e) {
+  clearCanvas()
+});
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  var nomElt =  document.getElementById("nom");
-  var nom=form.elements.nom.value
- var prenomElt =  document.getElementById("prenom");
-  var prenom=prenomElt.value
-console.log(nom);
-  ecrireMessage()
 
+  temps = 1200;
+  var nomElt = document.getElementById("nom");
+  var nom = form.elements.nom.value;
+  var prenomElt = document.getElementById("prenom");
+  var prenom = prenomElt.value;
+  sessionStorage.reservation = 1;
+  clearCanvas();
+  messageAfficheFin.ecrireMessage(nom, prenom);
+  diminuerCompteur();
+});
 
 //Validation du formulaire par l'utilisateur
+//objet MessageFin:
+// eltHtmlPresentation       element où s'affiche le message de fin
+//temps                      temps entre la réservation et l'annulation
 
-
-function ecrireMessage() {
+function MessageFin(eltHtmlPresentation, eltHtmlMessage) {
   // len=longueur de la liste des position de la souris pour écrire
-  if (len !== 0 && nom !== "" && prenom !== "") {
-var textetemps = ""
-    temps = 1200;
-   
-    // Si le formulaire est valide on stoke le nom et le prenom dans une variable locale 
-    localStorage.nom=nom;
-    localStorage.prenom=prenom;
-console.log(localStorage.nom);
-    document.getElementById("presentationMessage").style.visibility = "visible";
+  this.eltHtmlPresentation = eltHtmlPresentation,
+    this.eltHtmlMessage = eltHtmlMessage,
+
+    MessageFin.prototype.ecrireMessage = function (nom, prenom) {
+      if (len === 0 && nom !== "" && prenom !== "") {} else if (len == 0) {
+        document.getElementById("signature").style.border = " 2px solid red";
+      } else {
+        // Si le formulaire est valide on stoque le nom et le prenom dans une variable locale 
+        localStorage.nom = nom;
+        localStorage.prenom = prenom;
+        document.getElementById(this.eltHtmlPresentation).style.visibility = "visible";
+
+        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.stationName + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
 
 
-    document.getElementById("message").innerHTML += "<h3>Vélo réservé à la station " + sessionStorage.getItem("stationName") + " par " + localStorage.getItem("prenom") + " " + localStorage.getItem("nom") +affichage(1200)+" </h3>"
-    console.log("<h3>Vélo réservé à la station " + sessionStorage.getItem("stationName") + " par " + localStorage.getItem("prenom") + " " + localStorage.getItem("nom") + affichage(1200) + " </h3>")
+      };
+    }
 
-  
 
+
+}
+var messageAfficheFin = new MessageFin("presentationMessage", "message");
 //décompte du temps qu'il reste
-    function affichage (tempsInitial)
-   
-{
-   diminuerCompteur(tempsInitial);
-  function diminuerCompteur(temps) {
+function diminuerCompteur() {
   if (temps > 0) {
-    temps = temps - 1
-     var tempsL=tempsLitteral(temps);
-    sout = setTimeout(diminuerCompteur, 1000);
+    temps = temps - 1;
+    document.getElementById("messageTemps").innerHTML = tempsLitteral(temps);
+    sout = setTimeout("diminuerCompteur()", 1000);
   } else {
     clearInterval
   }
-return tempsL
-}
+
+};
+
+
 function tempsLitteral(seconde) {
   var s, m
   s = seconde % 60;
   m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
-  
+
   if (m !== 0) {
     if (s !== 0) {
-      textetemps = ", il vous reste : " + m + " min." + s + " s.</p>"
+      textetemps = "<h3>il vous reste : " + m + " min." + s + " s.</h3>"
     } else {
-      textetemps = "<p>, il vous reste : " + m + " min."
+      textetemps = "<h3>il vous reste : " + m + " min.</h3>"
     }
   } else {
     if (s !== 0) {
-      textetemps = ", il vous reste : " + s + " s."
+      textetemps = "<h3>il vous reste : " + s + " s.</h3>"
     } else {
-      textetemps = ", le temps est écoulé votre réservation a été annulée."
+      textetemps = "<h3>le temps est écoulé votre réservation a été annulée.</h3>"
     };
   }
   return textetemps
-}};}
-else if (len === 0){
-  document.getElementById("signature").style.border = " 2px solid red";
 }
-}});

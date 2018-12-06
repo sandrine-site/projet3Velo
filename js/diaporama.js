@@ -71,7 +71,6 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     return dep;
   };
   Slider.prototype.imageReste = function () {
-    console.log(this);
     if (play === 1) {
       entreDeux = setInterval(
 
