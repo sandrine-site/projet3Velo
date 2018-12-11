@@ -1,4 +1,4 @@
-function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, document) {
+function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, IdTouch, document) {
   this.id = id,
     this.temps = temps,
     this.largeurPourcent = largeurPourcent,
@@ -6,7 +6,8 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     this.idControl = idControl,
     this.idAvance = idAvance,
     this.idRecul = IdRecul,
-    this.document = document,
+    this.idTouch = IdTouch;
+  this.document = document,
 
 
     // enfants du silder:
@@ -112,19 +113,28 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
 
   }.bind(this));
   $(this.idAvance).on('click', function () {
-    slider.commandeAvance();
+    this.commandeAvance();
 
   }.bind(this));
   // mouvement avec les fleches clavier//
 
   $(this.document).on("keydown", function (e) {
     if (e.keyCode === 39) {
-      slider.commandeRecul();
+      this.commandeRecul();
     } else if (e.keyCode === 37) {
-      slider.commandeAvance();
+      this.commandeAvance();
     }
   }.bind(this));
-
+  var touchsurface = document.getElementById('idTouch');
+  $(touchsurface).on("swap", function (e) {
+    if ("swap" + e.detail.direction == "swapleft") {
+      console.log("swipeleft");
+      this.commandeRecul();
+    } else if ("swap" + e.detail.direction == "swapright") {
+      console.log("swiperight");
+      this.commandeAvance();
+    }
+  });
   //commande du play-stop//
 
 
@@ -142,7 +152,8 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
 //                                    #flecheavance
 //                                    #flecherecul
 
-var slider = new Slider("#slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", document);
+var slider = new Slider("#slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", "touchsurface",
+  document);
 var play = 1
 var entreDeux;
 slider.taille();

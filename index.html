@@ -1,15 +1,18 @@
 <!doctype html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <title>Géo-Vélo</title>
+  <meta name="description" content="Site vous permettant de réserver un vélo dans la ville de Marseille" />
+  <meta name="viewport" content="width=device-width,initial-scale=1 user-scalable=yes">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Raleway" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="shortcut icon" type="image/ico" href="images/favicon.png" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="css/mobile.css" rel="stylesheet" media="screen and (max-width: 700px)" title="présentation pour petits écrans">
+  <link rel="stylesheet" href="css/styles.css" media="screen and (min-width: 700px)">
   <link rel="stylesheet" href="css/MarkerCluster.css">
   <link rel="stylesheet" href="css/MarkerCluster.Default.css">
 </head>
@@ -17,7 +20,7 @@
 <header>
   <img id="logo" src="images/logo.png" alt="Logo géo vélo" />
   <div id="presentation">
-    <h1>Bievenue Sur Géo-Vélo</h1>
+    <h1>Bienvenue Sur Géo-Vélo</h1>
     <p>Ici, louer un vélo devient un jeu d'enfant.</p>
   </div>
 </header>
@@ -25,55 +28,52 @@
 <body>
 
   <div id=corps>
-
-
     <div id=presentationslider>
-
-
       <div id="slider">
         <ul>
           <li id="slide5">
-            <figcaption>
-              <p> Vous avez 20 min. pour vous rendre à la station<br /> et récupérer votre vélo.</p>
-            </figcaption>
             <figure class="explications">
+              <figcaption>
+                <p>Vous avez 20 min. pour vous<br />rendre à la station et récupérer<br />votre vélo.</p>
+              </figcaption>
+
               <img src="images/heure.png" alt="dessin d'un homme essayant d'arreter le temps" />
             </figure>
-            <figcaption>
-
-            </figcaption>
           </li>
           <li id="slide1">
 
             <figcaption>
-              <p>Bonjour, voici comment utiliser le site:</p>
+              <div id="grandEcrans">
+                <p>Bonjour, voici comment reserver<br />un vélo:</p>
+              </div>
+              <div id="petitEcrans">
+                <h1>Bienvenue Sur Géo-Vélo</h1>
+                <p>Ici, louer un vélo devient un jeu d'enfant.</p>
+                <img id="logoSlide" src="images/logo.png" alt="Logo géo vélo" />
+              </div>
             </figcaption>
-
           </li>
           <li id="slide2">
-            <figcaption>
-              <p> La carte des stations vous permet de<br />
-                sélectionner une station proche de vous.</p>
-            </figcaption>
             <figure class="explications">
+              <figcaption>
+                <p>La carte des stations vous<br />permet de sélectionner<br />une station.</p>
+              </figcaption>
               <img src="images/map.png" alt="petite image d'une carte" />
             </figure>
-
-
-
           </li>
           <li id="slide3">
-            <figcaption>
-              <p>Le nom de la station avec le nombre<br />
-                de vélos disponibles s'affiche.</p>
-            </figcaption>
+            <figure class="explications">
+              <figcaption>
+                <p>Le nom de la station avec le<br />nombre de vélos disponibles<br />s'affiche.</p>
+              </figcaption>
+              <img src="images/IdStation.png" alt="Carte d'identité d'une station" />
+            </figure>
           </li>
           <li id="slide4">
-            <figcaption>
-              <p> Pour réserver votre vélo remplissez le formulaire,<br />
-                sans oublier de le signer !</p>
-            </figcaption>
             <figure class="explications">
+              <figcaption>
+                <p>Pour réserver votre vélo<br />remplissez le formulaire,<br />sans oublier de le<br />signer !</p>
+              </figcaption>
               <img src="images/form.png" alt="dessin d'un formulaire à remplir" />
             </figure>
           </li>
@@ -91,11 +91,9 @@
         </div>
       </div>
     </div>
-
     <div id="presentationmaps">
       <div id=map>
         <div id="mapid"></div>
-
         <div id="Glegende">
           <div class="colonne">
             <div class="legende">
@@ -142,7 +140,7 @@
       <div id="fenetrereservation">
         <div id="fenetreStation"></div>
         <div id="formulaire">
-          <h3> Pour réserver un vélo veuillez renseigner le fomulaire çi dessous</h3>
+          <h3> Pour réserver un vélo veuillez renseigner le formulaire çi dessous</h3>
           <form method="post">
             <label for="nom">Nom :</label>
             <input type="texte" name="nom" id="nom" placeholder="" required /><br />
@@ -151,15 +149,13 @@
             <input name=signature id="presentationSignature" type="hidden" required />
             <h3> Veuillez signer dans le cadre ci-dessous.</h3>
             <div id="dessin">
-              <canvas id="signature"></canvas>
+              <canvas id="canvas" width="250" height="250"></canvas>
             </div>
             <input type="submit" id="signer" value="Valider">
             <input type="reset" id="reset" value="Annuler">
-
           </form>
         </div>
       </div>
-
     </div>
     <article id=presentationMessage>
       <div id=message></div>
@@ -169,11 +165,9 @@
     </article>
   </div>
   <script src="js/ajax.js"></script>
-
   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
   <script src="js/leaflet.markercluster-src.js"></script>
   <script src="js/leaflet.markercluster.js"></script>
-
   <script src="js/maps.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
   </script>
