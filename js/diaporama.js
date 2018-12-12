@@ -13,20 +13,20 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     // enfants du silder:
 
     Slider.prototype.enfantUn = function () {
-      var un = (this.id + " ul");
+      var un = ("#" + this.id + " ul");
 
       return un;
     };
   Slider.prototype.enfantDeux = function () {
-    var deux = (this.id + " ul li");
+    var deux = ("#" + this.id + " ul li");
     return deux;
   };
   Slider.prototype.first = function () {
-    var first = this.id + " ul li:first-child";
+    var first = "#" + this.id + " ul li:first-child";
     return first;
   };
   Slider.prototype.last = function () {
-    var last = this.id + " ul li:last-child";
+    var last = "#" + this.id + " ul li:last-child";
     return last;
   };
 
@@ -125,23 +125,66 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
       this.commandeAvance();
     }
   }.bind(this));
-  var touchsurface = document.getElementById('idTouch');
-  $(touchsurface).on("swap", function (e) {
-    if ("swap" + e.detail.direction == "swapleft") {
-      console.log("swipeleft");
-      this.commandeRecul();
-    } else if ("swap" + e.detail.direction == "swapright") {
-      console.log("swiperight");
-      this.commandeAvance();
-    }
-  });
+
   //commande du play-stop//
-
-
   $(idControl).on('click', function () {
     this.commandePause();
   }.bind(this));
+
+
+
+
+  var touchsurface = document.getElementById("presentationslider");
+  var startX;
+  var distX;
+  var swipMin = 50; //distance de déplacement minimale pour que le swipe soit pris en compte 
+  var TemsMax = 300; // durée maximale du swipe
+  var tempsEcoule;
+  var startTime;
+
+  touchsurface.addEventListener('touchstart', function (e) {
+    var touchobj = e.changedTouches[0];
+    console.log("dffjdkfjfds");
+    dirrectionSwipe = 'none';
+    dist = 0;
+    startX = touchobj.pageX;
+    startTime = new Date().getTime(); //commence à compter le temps
+    e.preventDefault();
+  }, false);
+
+  $(touchsurface).on('touchmove', function (e) {
+    e.preventDefault();
+  }, false)
+
+  $(touchsurface).on('touchend', function (e) {
+    var touchobj = e.changedTouches[0]
+    distX = touchobj.pageX - startX // mesure la distanceparcourue par le doigt
+    tempsEcoule = new Date().getTime() - startTime // temps Ecoulé
+    if (tempsEcoulee <= TemsMax) { // first condition for awipe met
+      if (Math.abs(distX) >= swipMin && dist < 0) {
+        this.commandeAvance();
+      } else if (Math.abs(distX) >= swipMin && dist > 0) {
+        this.commandeRecul();
+      }
+    }
+    e.preventDefault();
+    e.stopPropagation()
+  }, false);
+  $(touchsurface).on("swiperight", function (e) {
+    this.moveRight.bind(this);
+    e.preventDefault;
+    e.stopPropagation();
+  })
+  $(touchsurface).on("swipeleft", function (e) {
+    this.moveLeft.bind(this);
+    e.preventDefault;
+    e.stopPropagation();
+  })
+
 }
+
+
+
 
 //on fixe comme constantes de départ:
 //l'id du slider                      ici #slider
@@ -152,7 +195,7 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
 //                                    #flecheavance
 //                                    #flecherecul
 
-var slider = new Slider("#slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", "touchsurface",
+var slider = new Slider("slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", "touchsurface",
   document);
 var play = 1
 var entreDeux;

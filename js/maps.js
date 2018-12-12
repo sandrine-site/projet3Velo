@@ -1,6 +1,6 @@
 var sessionStorage;
-
-
+sessionStorage.temps = 0;
+sessionStorage.station_name = "";
 //On definit l'apparence de la carte
 var mymap = L.map('mapid').setView([43.296867, 5.387092], 13);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2FuZHJpbmVjbG9pdHJlIiwiYSI6ImNqcDJwZW5kMzA4dXgza3A4Nndxa2d3ZnoifQ.YmmEHgjVDPWedeomCY24cA', {
@@ -47,7 +47,7 @@ ajaxGet(url, function (reponse) {
 
   var stations = JSON.parse(reponse);
   stations.forEach(function (station) {
-    if (station.name === sessionStorage.stationName && sessionStorage.temps > 0) {
+    if (station.name === sessionStorage.station_name && sessionStorage.temps > 0) {
 
       station.available_bikes = station.available_bikes - 1;
     }
@@ -126,39 +126,48 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
     this.eltHtmlStation = eltHtmlStation,
     this.eltHtmlReservation = eltHtmlReservation,
     this.eltHtmlFormulaire = eltHtmlFormulaire,
-    StationFormulaire.prototype.afficheForm = function () {
+    console.log(this.station.name);
+  console.log(sessionStorage.station_name);
+  StationFormulaire.prototype.afficheForm = function () {
+    if (sessionStorage.station_name === this.station.name) {
+      document.getElementById(this.eltHtmlStation).innerHTML = '';
+      document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/>' + (this.station.available_bikes - 1) + ' vélos disponibles </p>';
+    } else {
       document.getElementById(this.eltHtmlStation).innerHTML = '';
       document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/>' + this.station.available_bikes + ' vélos disponibles </p>';
-
-      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
-      sessionStorage.setItem("stationName", this.station.name);
-      sessionStorage.setItem("stationVelos", this.station.available_bikes);
-      var reservationDeja
-      if (sessionStorage.temps < 1200) {
-        reservationDeja = 1;
-      } else {
-        reservationDeja = 0;
-      }
-
-
-      var veloDispo = this.station.available_bikes;
-
-      document.getElementById(this.eltHtmlStation).style.display = "block";
-      document.getElementById(this.eltHtmlReservation).style.display = "block";
-
-      if (this.station.status !== "OPEN") {
-        document.getElementById(this.eltHtmlStation).innerHTML += "<h3>Désolé cette station est actuellement fermée<h3>";
-        document.getElementById(this.eltHtmlStation).style.display = "none";
-      } else if (veloDispo === 0) {
-        document.getElementById(this.eltHtmlStation).innerHTML += "<h3>Il n'y a pas de vélo disponible à cette station.<h3>";
-        document.getElementById(this.eltHtmlFormulaire).style.display = "none";
-      } else if (veloDispo != 0 && reservationDeja == 0) {
-        this.faireReservation();
-      } else if (reservationDeja != 0) {
-        document.getElementById(this.eltHtmlStation).innerHTML += "<h3> Attention, vous avez déjà une réservation en cours, une nouvelle réservation entrainera une annulation de la précédente.<h3>";
-        this.faireReservation();
-      }
     }
+
+
+    var veloDispo = this.station.available_bikes;
+
+    document.getElementById(this.eltHtmlStation).style.display = "block";
+    document.getElementById(this.eltHtmlReservation).style.display = "block";
+
+    if (this.station.status !== "OPEN") {
+      document.getElementById(this.eltHtmlStation).innerHTML += "<h3>Désolé cette station est actuellement fermée<h3>";
+      document.getElementById(this.eltHtmlStation).style.display = "none";
+    } else if (veloDispo === 0) {
+      document.getElementById(this.eltHtmlStation).innerHTML += "<h3>Il n'y a pas de vélo disponible à cette station.<h3>";
+      document.getElementById(this.eltHtmlFormulaire).style.display = "none";
+    } else if (veloDispo != 0 && sessionStorage.temps == 0) {
+      this.faireReservation();
+      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
+      sessionStorage.station_name = this.station.name;
+      sessionStorage.station_Velos = this.station.available_bikes;
+
+    } else if (sessionStorage.temps != 0) {
+      if (sessionStorage.station_name === this.station.name) {
+        console.log("velo");
+        veloDispo = this.station.available_bikes - 1;
+      }
+      document.getElementById(this.eltHtmlStation).innerHTML += "<h3> Attention, vous avez déjà une réservation en cours, une nouvelle réservation entrainera une annulation de la précédente.<h3>";
+      this.faireReservation();
+      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
+      sessionStorage.station_name = this.station.name;
+      sessionStorage.station_Velos = this.station.available_bikes;
+
+    }
+  }
   // fonction qui affiche le formulaire si besoin et determine ce qu'il faut afficher dans le formulaire
   StationFormulaire.prototype.faireReservation = function () {
     document.getElementById(this.eltHtmlStation).style.display = "block";
@@ -176,3 +185,6 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
 }
 
 mymap.addLayer(markersCluster);
+window.onload = function () {
+  sessionStorage.temps = 0;
+}

@@ -47,6 +47,7 @@ smartphones             <700 px (feuille de style séparée)
     height: auto;
     background-size: cover;
     padding-bottom: 50px;
+    overflow-x: hidden;
 
   }
 
@@ -146,7 +147,8 @@ smartphones             <700 px (feuille de style séparée)
 
   /*--------Images----------------*/
 
-  figcaption p {
+  figcaption p,
+  #caption p {
     font-size: 1.2em;
     color: #363530;
     margin-top: 0;
@@ -154,11 +156,12 @@ smartphones             <700 px (feuille de style séparée)
     line-height: 1.5em;
   }
 
-  figure {
-    width: 50%;
+  .explications {
+    width: 86%;
     margin: auto;
     display: block;
     align-self: flex-end;
+    flex-direction: column;
   }
 
   figure img {
@@ -183,14 +186,10 @@ smartphones             <700 px (feuille de style séparée)
     text-align: center;
   }
 
-
   #slide5 {
     background: linear-gradient(#b7bcc5, transparent, transparent);
     background-color: #aa2834;
-
   }
-
-
 
   #slide5 figcaption p {
     display: block;
@@ -325,13 +324,15 @@ smartphones             <700 px (feuille de style séparée)
 
   #Glegende {
     display: flex;
-    width: 80%;
+    width: 100%;
     margin: auto;
     justify-content: space-around;
     align-items: flex-start;
+    background-color: #363530;
+    justify-content: :space-between;
   }
 
-  .legende figcaption p {
+  #Glegende p {
     color: #88c5d6 !important;
     font-size: 0.8em;
     text-align: left;
@@ -342,24 +343,25 @@ smartphones             <700 px (feuille de style séparée)
 
   .colonne {
     display: flex;
-    width: 50%;
+    width: 58%;
     flex-direction: column;
-    align-items: flex-start;
-    margin-top: 20px;
-
+    margin-left: -10%;
+    margin-right: 1%;
   }
 
-  .legende {
+  #Glegende figcaption {
+    width: 186%;
+  }
+
+  figure {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 0;
-
   }
 
-  .legende figure {
+  #Glegende figure img {
     width: 20px;
-    height: 24px;
-    margin: 0;
+    height: 20px;
   }
 
 
@@ -385,7 +387,7 @@ smartphones             <700 px (feuille de style séparée)
   }
 
   #formulaire {
-    width: 90%;
+    width: 92%;
     background-color: #888a80;
     padding: 2% 4%;
     line-height: 1.5em;
@@ -442,7 +444,7 @@ smartphones             <700 px (feuille de style séparée)
     border: none;
     margin-right: auto;
     text-align: center;
-    box-shadow: 0px 2px 1px #363530;
+    box-shadow: 0 2px 1px #363530;
   }
 
   #formulaire > label {
@@ -453,7 +455,7 @@ smartphones             <700 px (feuille de style séparée)
   /*-------signatue------------*/
   #presentationSignature {
 
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -488,7 +490,7 @@ smartphones             <700 px (feuille de style séparée)
     display: none;
     background-color: #888a80;
     align-self: center;
-    width: 90%;
+    width: 100%;
     margin-top: -38px;
     margin: auto;
   }

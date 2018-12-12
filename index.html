@@ -7,7 +7,8 @@
   <meta name="description" content="Site vous permettant de réserver un vélo dans la ville de Marseille" />
   <meta name="viewport" content="width=device-width,initial-scale=1 user-scalable=yes">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative|Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="shortcut icon" type="image/ico" href="images/favicon.png" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
@@ -17,15 +18,16 @@
   <link rel="stylesheet" href="css/MarkerCluster.Default.css">
 </head>
 
-<header>
-  <img id="logo" src="images/logo.png" alt="Logo géo vélo" />
-  <div id="presentation">
-    <h1>Bienvenue Sur Géo-Vélo</h1>
-    <p>Ici, louer un vélo devient un jeu d'enfant.</p>
-  </div>
-</header>
-
 <body>
+  <header>
+    <img id="logo" src="images/logo.png" alt="Logo géo vélo" />
+    <div id="presentation">
+      <h1>Bienvenue Sur Géo-Vélo</h1>
+      <p>Ici, louer un vélo devient un jeu d'enfant.</p>
+    </div>
+  </header>
+
+
 
   <div id=corps>
     <div id=presentationslider>
@@ -34,29 +36,28 @@
           <li id="slide5">
             <figure class="explications">
               <figcaption>
-                <p>Vous avez 20 min. pour vous<br />rendre à la station et récupérer<br />votre vélo.</p>
+                <p>Vous avez 20 min. pour vous rendre à la station et récupérer votre vélo.</p>
               </figcaption>
 
               <img src="images/heure.png" alt="dessin d'un homme essayant d'arreter le temps" />
             </figure>
           </li>
           <li id="slide1">
-
-            <figcaption>
+            <div id=caption>
               <div id="grandEcrans">
-                <p>Bonjour, voici comment reserver<br />un vélo:</p>
+                <p>Bonjour, voici comment reserver un vélo:</p>
               </div>
               <div id="petitEcrans">
                 <h1>Bienvenue Sur Géo-Vélo</h1>
                 <p>Ici, louer un vélo devient un jeu d'enfant.</p>
                 <img id="logoSlide" src="images/logo.png" alt="Logo géo vélo" />
               </div>
-            </figcaption>
+            </div>
           </li>
           <li id="slide2">
             <figure class="explications">
               <figcaption>
-                <p>La carte des stations vous<br />permet de sélectionner<br />une station.</p>
+                <p>La carte des stations vous permet de sélectionner une station.</p>
               </figcaption>
               <img src="images/map.png" alt="petite image d'une carte" />
             </figure>
@@ -64,7 +65,7 @@
           <li id="slide3">
             <figure class="explications">
               <figcaption>
-                <p>Le nom de la station avec le<br />nombre de vélos disponibles<br />s'affiche.</p>
+                <p>Le nom de la station avec le nombre de vélos disponibles s'affiche.</p>
               </figcaption>
               <img src="images/IdStation.png" alt="Carte d'identité d'une station" />
             </figure>
@@ -72,7 +73,7 @@
           <li id="slide4">
             <figure class="explications">
               <figcaption>
-                <p>Pour réserver votre vélo<br />remplissez le formulaire,<br />sans oublier de le<br />signer !</p>
+                <p>Pour réserver votre vélo remplissez le formulaire, sans oublier de le signer !</p>
               </figcaption>
               <img src="images/form.png" alt="dessin d'un formulaire à remplir" />
             </figure>
@@ -96,44 +97,38 @@
         <div id="mapid"></div>
         <div id="Glegende">
           <div class="colonne">
-            <div class="legende">
-              <figure class="cluster"><img src="images/cluster.png" alt="logo d'un cluster" /></figure>
+            <figure class="cluster"><img src="images/cluster.png" alt="logo d'un cluster" />
               <figcaption class="cluster">
                 <p>Regroupement de plusieurs stations</p>
               </figcaption>
-            </div>
-            <div class="legende">
-              <figure class="bonus"><img src="images/VeloLibreBonus.png" alt="logo station bonus" /></figure>
+            </figure>
+            <figure class="bonus"><img src="images/VeloLibreBonus.png" alt="logo station bonus" />
               <figcaption class="bonus">
                 <p>Station bonus</p>
               </figcaption>
-            </div>
-            <div class="legende">
-              <figure class="ferme"><img src="images/StationFermee.png" alt="logo station fermée" /></figure>
+            </figure>
+            <figure class="ferme"><img src="images/StationFermee.png" alt="logo station fermée" />
               <figcaption class="bonus">
                 <p>Station fermée</p>
               </figcaption>
-            </div>
+            </figure>
           </div>
           <div class="colonne">
-            <div class="legende">
-              <figure class="vert"><img src="images/VeloLibre.png" alt="logo velo disponible" /></figure>
+            <figure class="vert"><img src="images/VeloLibre.png" alt="logo velo disponible" />
               <figcaption class="vert">
                 <p>Vélos disponibles à cette station</p>
               </figcaption>
-            </div>
-            <div class="legende">
-              <figure class="orange"><img src="images/VeloOrange.png" alt="logo velo peu dispinibles" /></figure>
+            </figure>
+            <figure class="orange"><img src="images/VeloOrange.png" alt="logo velo peu dispinibles" />
               <figcaption class="orange">
                 <p>Moins de 5 vélos disponibles à cette station</p>
               </figcaption>
-            </div>
-            <div class="legende">
-              <figure class="rouge"><img src="images/VeloZero.png" alt="logo plus de vélo" /></figure>
+            </figure>
+            <figure class="rouge"><img src="images/VeloZero.png" alt="logo plus de vélo" />
               <figcaption class="rouge">
                 <p>Actuellement il n'y a plus de vélos à cette station</p>
               </figcaption>
-            </div>
+            </figure>
           </div>
         </div>
       </div>
@@ -143,10 +138,10 @@
           <h3> Pour réserver un vélo veuillez renseigner le formulaire çi dessous</h3>
           <form method="post">
             <label for="nom">Nom :</label>
-            <input type="texte" name="nom" id="nom" placeholder="" required /><br />
+            <input type="text" name="nom" id="nom" /><br />
             <label for="prenom">Prénom :</label>
-            <input type="texte" name="prenom" id="prenom" placeholder="" required /><br />
-            <input name=signature id="presentationSignature" type="hidden" required />
+            <input type="text" name="prenom" id="prenom" /><br />
+            <input name=signature id="presentationSignature" type="hidden" />
             <h3> Veuillez signer dans le cadre ci-dessous.</h3>
             <div id="dessin">
               <canvas id="canvas" width="250" height="250"></canvas>
@@ -157,12 +152,12 @@
         </div>
       </div>
     </div>
-    <article id=presentationMessage>
+    <div id=presentationMessage>
       <div id=message></div>
       <div id=messageTemps></div>
       <p>Il ne peut y avoir qu'une réservation à la fois. Si une nouvelle réservation a lieu, elle remplace la précédente.<br />
         Attention : la reservation expire si le navigateur web se referme.</p>
-    </article>
+    </div>
   </div>
   <script src="js/ajax.js"></script>
   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
