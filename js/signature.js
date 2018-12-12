@@ -1,4 +1,5 @@
 var localStorage;
+var sessionStorage;
 var len;
 
 // définition de la class nouvelle signature
@@ -20,7 +21,7 @@ function NouvelleSignature(canvasId, typeInput, lineWidth, color) {
 
     var canvas = document.getElementById(this.canvasId);
     var context = canvas.getContext("2d");
-    console.log(canvas)
+
     //on définit les carractéristiques du trait
     context.lineWidth = this.lineWidth;
     context.lineCap = "round";
@@ -116,7 +117,6 @@ function NouvelleSignature(canvasId, typeInput, lineWidth, color) {
     };
 
     this.clearCanvas = function (context) {
-      console.log("annuler")
       context.clearRect(0, 0, 250, 250);
       clickX = [];
       clickY = [];
@@ -128,13 +128,12 @@ function NouvelleSignature(canvasId, typeInput, lineWidth, color) {
 
     var form = document.querySelector("form");
     form.addEventListener("reset", function () {
-      console.log("reset")
       signature.clearCanvas(context);
+      validPlus = validPlus + 1;
       document.getElementById("nom").placeholder = '';
       document.getElementById("prenom").placeholder = '';
     });
     form.addEventListener("submit", function (e) {
-      console.log("submit")
       sessionStorage.temps = 1200;
       e.preventDefault();
       var nom = form.elements["nom"].value;
@@ -176,22 +175,18 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
         localStorage.nom = nom;
         localStorage.prenom = prenom;
         document.getElementById(this.eltHtmlPresentation).style.display = "block";
-        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.stationName + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
+        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
       };
     }
 
   //décompte du temps qu'il reste
 
   this.diminuerCompteur = function (temps) {
-    console.log(temps);
     if (temps > 0 && this.validPlus === 1) {
-      console.log(temps);
       temps = temps - 1;
       sessionStorage.temps = temps;
-      console.log(idMessage);
       document.getElementById(idMessage).innerHTML = this.tempsLitteral(temps);
       sout = setTimeout("messageAfficheFin.diminuerCompteur(" + temps + ")", 1000);
-      console.log(temps);
     } else {
       clearInterval
       this.validPlus = 1;
@@ -223,4 +218,4 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
 var signature = new NouvelleSignature("canvas", "mouse", 1.5, "#3364fe");
 window.onload = signature.Initialisation();
 var textetemps = ""
-var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", 1, "messageTemps");
+var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", 0, "messageTemps");

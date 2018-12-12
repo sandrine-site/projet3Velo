@@ -1,4 +1,15 @@
+//on définit la classe slider cette classe contient les constantes:
+//l'id du slider
+//le temps de chaque diapo en ms
+//la largeur du slider en pourcent
+//le nombre d'images du slider
+//l'id des controles
+// + des constantes internes
+//
+
 function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, IdTouch, document) {
+  // definition des constantes
+
   this.id = id,
     this.temps = temps,
     this.largeurPourcent = largeurPourcent,
@@ -6,36 +17,37 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     this.idControl = idControl,
     this.idAvance = idAvance,
     this.idRecul = IdRecul,
-    this.idTouch = IdTouch;
-  this.document = document,
+    this.document = document;
 
+  // deffinition des différentes methodes
 
-    // enfants du silder:
+  // enfants du silder:
+  Slider.prototype.enfantUn = function () {
+    var un = ("#" + this.id + " ul");
+    return un;
+  };
 
-    Slider.prototype.enfantUn = function () {
-      var un = ("#" + this.id + " ul");
-
-      return un;
-    };
   Slider.prototype.enfantDeux = function () {
     var deux = ("#" + this.id + " ul li");
     return deux;
   };
+
   Slider.prototype.first = function () {
     var first = "#" + this.id + " ul li:first-child";
     return first;
   };
+
   Slider.prototype.last = function () {
     var last = "#" + this.id + " ul li:last-child";
     return last;
   };
 
-  // constantes du slider
-
+  // dimentions du slider:
   Slider.prototype.largeurContenant = function () {
     var largeurCont = this.nbImages * 100;
-    return largeurCont;
+    return largeurCont
   };
+
   Slider.prototype.taille = function () {
     for (var i = 1; i <= this.nbImages; i++) {
       $("#slide" + i).css('width', 100 / nbImages + "%")
@@ -43,57 +55,58 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     $(this.enfantUn()).css('width', (this.largeurContenant() + "%"));
   };
 
-  //déplacement du slider
-
+  //déplacement du slider "automatique"
   Slider.prototype.boucle = function () {
     $(this.first()).appendTo(this.enfantUn());
     $(this.enfantUn()).css('left', "");
   };
+
   Slider.prototype.boucleLeft = function () {
       $(this.last()).prependTo(this.enfantUn());
       $(this.enfantUn()).css('left', "");
     },
+
     Slider.prototype.moveLeft = function () {
       var dep = 100;
       $(this.enfantUn()).animate({
           'left': (dep + '%')
         }, temps / 5,
         this.boucleLeft.bind(this));
-
       return dep;
     };
+
   Slider.prototype.moveRight = function () {
     var dep = -100;
     $(this.enfantUn()).animate({
         'left': (dep + '%')
       }, temps / 5,
       this.boucle.bind(this));
-
     return dep;
   };
+
   Slider.prototype.imageReste = function () {
     if (play === 1) {
       entreDeux = setInterval(
-
         this.moveRight.bind(this), temps);
     } else {
       clearInterval(entreDeux);
     }
   };
 
-  // commande avec la souris + icones//
+  // commande avec la souris + flèches//
 
   Slider.prototype.commandeRecul = function () {
     clearInterval(entreDeux);
     this.moveRight();
     this.imageReste();
   };
+
   Slider.prototype.commandeAvance = function () {
     clearInterval(entreDeux);
     this.moveLeft();
     this.imageReste();
   };
-  //  commandePause=function()
+
   Slider.prototype.commandePause = function () {
     if ($(this.idControl).hasClass('pause')) {
       play = 0;
@@ -107,16 +120,21 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
       $(this.idControl).removeClass('play').addClass('pause');
     }
   };
-  // commande avec la souris + icones//
+
   $(this.idRecul).on('click', function () {
     this.commandeRecul();
-
   }.bind(this));
+
   $(this.idAvance).on('click', function () {
     this.commandeAvance();
-
   }.bind(this));
-  // mouvement avec les fleches clavier//
+
+  $(idControl).on('click', function () {
+    this.commandePause();
+  }.bind(this));
+
+
+  // mouvement avec les fleches clavier
 
   $(this.document).on("keydown", function (e) {
     if (e.keyCode === 39) {
@@ -126,65 +144,56 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     }
   }.bind(this));
 
-  //commande du play-stop//
-  $(idControl).on('click', function () {
-    this.commandePause();
-  }.bind(this));
+  //Commande avec le swipe (écran tactiles)
 
-
-
-
-  var touchsurface = document.getElementById("presentationslider");
+  var touchsurface = document.getElementById(this.id);
   var startX;
   var distX;
   var swipMin = 50; //distance de déplacement minimale pour que le swipe soit pris en compte 
-  var TemsMax = 300; // durée maximale du swipe
+  var TemsMax = 1000; // durée maximale du swipe
   var tempsEcoule;
   var startTime;
+  var touchobj
 
   touchsurface.addEventListener('touchstart', function (e) {
-    var touchobj = e.changedTouches[0];
-    console.log("dffjdkfjfds");
+    touchobj = e.changedTouches[0];
     dirrectionSwipe = 'none';
     dist = 0;
     startX = touchobj.pageX;
     startTime = new Date().getTime(); //commence à compter le temps
+  }, false);
+
+  touchsurface.addEventListener('touchmove', function (e) {
     e.preventDefault();
   }, false);
 
-  $(touchsurface).on('touchmove', function (e) {
-    e.preventDefault();
-  }, false)
-
-  $(touchsurface).on('touchend', function (e) {
-    var touchobj = e.changedTouches[0]
-    distX = touchobj.pageX - startX // mesure la distanceparcourue par le doigt
+  touchsurface.addEventListener('touchend', function (e) {
+    touchobj = e.changedTouches[0];
+    distX = touchobj.pageX - startX; // mesure la distanceparcourue par le doigt
     tempsEcoule = new Date().getTime() - startTime // temps Ecoulé
-    if (tempsEcoulee <= TemsMax) { // first condition for awipe met
-      if (Math.abs(distX) >= swipMin && dist < 0) {
-        this.commandeAvance();
-      } else if (Math.abs(distX) >= swipMin && dist > 0) {
+    if (tempsEcoule <= TemsMax) {
+      if (Math.abs(distX) >= swipMin && distX < 0) {
         this.commandeRecul();
+      } else if (Math.abs(distX) >= swipMin && distX > 0) {
+        this.commandeAvance();
       }
     }
-    e.preventDefault();
-    e.stopPropagation()
-  }, false);
-  $(touchsurface).on("swiperight", function (e) {
-    this.moveRight.bind(this);
-    e.preventDefault;
-    e.stopPropagation();
-  })
-  $(touchsurface).on("swipeleft", function (e) {
-    this.moveLeft.bind(this);
-    e.preventDefault;
-    e.stopPropagation();
-  })
+  }.bind(this), false);
 
+  // ne fonctionne pas????
+  //  touchsurface.addEventListener("swiperight", function (e) {
+  //    this.moveRight;
+  //    e.preventDefault;
+  //    e.stopPropagation();
+  //  })
+  //  touchsurface.addEventListener("swipeleft", function (e) {
+  //    this.moveLeft;
+  //    e.preventDefault;
+  //    e.stopPropagation();
+  //  })
 }
 
-
-
+//----------initialisation-----------//
 
 //on fixe comme constantes de départ:
 //l'id du slider                      ici #slider
@@ -197,7 +206,7 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
 
 var slider = new Slider("slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", "touchsurface",
   document);
-var play = 1
+var play = 1;
 var entreDeux;
 slider.taille();
 slider.imageReste();
