@@ -389,7 +389,7 @@ smartphones             <700 px (feuille de style séparée)
     display: none;
     margin: auto;
     margin-top: -4px;
-    position: absolute;
+    /*    position: absolute;*/
 
   }
 
@@ -408,7 +408,7 @@ smartphones             <700 px (feuille de style séparée)
     display: none;
     padding-bottom: 2%;
     padding-top: 2%;
-    position: absolute;
+    /*    position: absolute;*/
   }
 
   #fenetreStation p,

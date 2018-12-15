@@ -76,13 +76,12 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
 
     //Evenements tactiles
     // moment où le doigt touche l'écran
-    var startX, startY
     canvas.addEventListener("touchstart", function (e) {
       console.log(e);
       stylo = true;
       e.preventDefault();
-      clickX.push(e.changedTouches[0].clientX - canvas.offsetLeft);
-      clickY.push(e.changedTouches[0].clientY - canvas.offsetTop);
+      clickX.push(e.changedTouches[0].pageX - canvas.offsetLeft);
+      clickY.push(e.changedTouches[0].pageY - canvas.offsetTop);
       clickDrag.push(false);
       NouvelleSignature.dessiner(context);
     }, false);
@@ -91,8 +90,8 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
       console.log(e);
       if (stylo === true) {
         for (var i = 0; i < e.touches.length; i++) {
-          clickX.push(e.targetTouches[i].clientX - canvas.offsetLeft);
-          clickY.push((e.targetTouches[i].clientY - canvas.offsetTop) + 100);
+          clickX.push(e.targetTouches[i].pageX - canvas.offsetLeft);
+          clickY.push((e.targetTouches[i].pageY - canvas.offsetTop));
           console.log(clickX[i] + " y: " + clickY[i])
           clickDrag.push(true);
         }
@@ -158,79 +157,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
 
 };
 
-
-//calss MessageFin:
-//aprés validation du formulaire par l'utilisateur elle affiche le message de réservation
-//objet MessageFin:
-// eltHtmlPresentation       element où s'affiche le message de fin
-//temps                      temps entre la réservation et l'annulation
-
-function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStation, idformulaire, idMessage) {
-
-  // len=longueur de la liste des position de la souris dans le canvas
-  this.eltHtmlPresentation = eltHtmlPresentation,
-    this.eltHtmlMessage = eltHtmlMessage,
-    this.idreservation = idreservation,
-    this.idStation = idStation,
-    this.idformulaire = idformulaire;
-  this.idMessage = idMessage,
-
-    this.ecrireMessage = function (nom, prenom) {
-      //on verifie que les chapms sont remplis
-      if (len === 0) {
-        document.getElementById("signature").style.border = " 2px solid red";
-      } else if (nom == "") {
-        document.getElementById("nom").style.border = " 2px solid red";
-      } else if (prenom == "") {
-        document.getElementById("prenom").style.border = " 2px solid red";
-      } else {
-        // Si le formulaire est valide on stoque le nom et le prenom dans une variable locale on efface le formulaire
-        document.getElementById(idreservation).style.display = "none";
-        document.getElementById(idStation).style.display = "none";
-        document.getElementById(idformulaire).style.display = "none";
-        localStorage.nom = nom;
-        localStorage.prenom = prenom;
-        document.getElementById(this.eltHtmlPresentation).style.display = "block";
-        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
-      };
-    }
-
-  //décompte du temps qu'il reste
-  this.diminuerCompteur = function (temps) {
-    if (temps > 0 && validPlus == 1) {
-      temps = temps - 1;
-      sessionStorage.temps = temps;
-      document.getElementById(idMessage).innerHTML = this.tempsLitteral(temps);
-      sout = setTimeout("messageAfficheFin.diminuerCompteur(" + temps + ")", 1000);
-    } else {
-      validPlus = 1;
-      sessionStorage.temps = 100;
-      clearInterval;
-    }
-  };
-
-  this.tempsLitteral = function (seconde) {
-    var s, m
-    s = seconde % 60;
-    m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
-    if (m !== 0) {
-      if (s !== 0) {
-        textetemps = "<h3>il vous reste : " + m + " min." + s + " s.</h3>";
-      } else {
-        textetemps = "<h3>il vous reste : " + m + " min.</h3>";
-      }
-    } else {
-      if (s !== 0) {
-        textetemps = "<h3>il vous reste : " + s + " s.</h3>";
-      } else {
-        textetemps = "<h3>le temps est écoulé votre réservation a été annulée.</h3>";
-      };
-    }
-    return textetemps;
-  };
-}
 //Lancement de la fonction signature (init) quand tous est prêt
 var signature = new NouvelleSignature("canvas", 1.5, "#3364fe");
 signature.Initialisation();
-var textetemps = "";
-var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", "messageTemps");
