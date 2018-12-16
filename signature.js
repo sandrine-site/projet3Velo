@@ -144,15 +144,10 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
       var nom = form.elements["nom"].value;
       var prenom = form.elements["prenom"].value;
       signature.clearCanvas;
-      var Timestamp2 = new Date().getTime()
-      var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", "messageTemps");
-      messageAfficheFin.ecrireMessage(nom, prenom);
+
+      messageAfficheFin.ecrireMessage(nom, prenom, 0);
 
     });
   }
 
 };
-
-//Lancement de la fonction signature (init) quand tous est prêt
-var signature = new NouvelleSignature("canvas", 1.5, "#3364fe");
-signature.Initialisation();

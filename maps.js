@@ -1,7 +1,6 @@
 // On définit les variables de sessions et on les initialise si necessaires
 var sessionStorage;
-sessionStorage.temps = 0;
-sessionStorage.station_name = "";
+
 
 //On definit l'apparence de la carte
 var mymap = L.map('mapid').setView([43.296867, 5.387092], 13);
@@ -50,14 +49,14 @@ var markersCluster = new L.MarkerClusterGroup({
 //                eltHtmlStation element contenant la déscription de la station
 //                eltHtmlReservation element englobant l'element station et l'element formulaire
 //                eltHtmlFormulaire contenant le formulaire de réservation
-
-function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, eltHtmlFormulaire) {
-
+//presentationMessage
+function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, eltHtmlFormulaire, eltHtmlPresentation) {
   this.mymap = mymap,
     this.station = station,
     this.eltHtmlStation = eltHtmlStation,
     this.eltHtmlReservation = eltHtmlReservation,
     this.eltHtmlFormulaire = eltHtmlFormulaire;
+  this.eltHtmlPresentation = eltHtmlPresentation;
 
   //Affichage de la description des stations 
   StationFormulaire.prototype.afficheForm = function () {
@@ -83,15 +82,20 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
       // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
       sessionStorage.station_name = this.station.name;
       sessionStorage.station_Velos = this.station.available_bikes;
-    } else if (sessionStorage.temps != 0) {
+
+    } else if (Date.now() - sessionStorage.dateReservation <= 12000) {
+      messageAfficheFin.ecrireMessage(localStorage.nom, localStorage.prenom, 1);
       if (sessionStorage.station_name === this.station.name) {
         veloDispo = this.station.available_bikes - 1;
       }
       document.getElementById(this.eltHtmlStation).innerHTML += "<h3> Attention, vous avez déjà une réservation en cours, une nouvelle réservation entrainera une annulation de la précédente.<h3>";
       this.faireReservation();
+
       // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
       sessionStorage.station_name = this.station.name;
       sessionStorage.station_Velos = this.station.available_bikes;
+    } else {
+      this.faireReservation();
     }
   }
   // fonction qui affiche le formulaire si besoin et determine ce qu'il faut afficher dans le formulaire
@@ -126,9 +130,9 @@ ajaxGet(url, function (reponse) {
         icon: myIconFermee,
         title: station.number
       }).on('click', function () {
-        var StationFormulaire1 = new StationFormulaire(mymap, station, "#fenetreStation", "#fenetrereservation", "#formulaire");
+        var StationFormulaire1 = new StationFormulaire(mymap, station, "#fenetreStation", "#fenetrereservation", "#formulaire", "#presentationMessage");
         StationFormulaire1.afficheForm();
-        markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+        markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">Réserver</a>', {
           offset: L.point(-5, 0),
           direction: 'auto',
           permanent: false,
@@ -145,9 +149,9 @@ ajaxGet(url, function (reponse) {
           icon: myIconZero,
           title: station.number
         }).on('click', function () {
-          var StationFormulaire2 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire");
+          var StationFormulaire2 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire", "#presentationMessage");
           StationFormulaire2.afficheForm();
-          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">Réserver</a>', {
             offset: L.point(-5, 0),
             direction: 'auto',
             permanent: false,
@@ -162,9 +166,9 @@ ajaxGet(url, function (reponse) {
           icon: myIconOrangeBonus,
           title: station.number
         }).on('click', function () {
-          var StationFormulaire3 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire");
+          var StationFormulaire3 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire", "#presentationMessage");
           StationFormulaire3.afficheForm();
-          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">Réserver</a>', {
             offset: L.point(-5, 0),
             direction: 'auto',
             permanent: false,
@@ -179,9 +183,9 @@ ajaxGet(url, function (reponse) {
           icon: myIconOrange,
           title: station.number
         }).on('click', function () {
-          var StationFormulaire4 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire");
+          var StationFormulaire4 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire", "#presentationMessage");
           StationFormulaire4.afficheForm();
-          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">Réserver</a>', {
             offset: L.point(-5, 0),
             direction: 'auto',
             permanent: false,
@@ -196,8 +200,8 @@ ajaxGet(url, function (reponse) {
           icon: myIconLibre,
           title: station.number
         }).on('click', function () {
-          var StationFormulaire5 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire");
-          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+          var StationFormulaire5 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire", "#presentationMessage");
+          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">Réserver</a>', {
             offset: L.point(-5, 0),
             direction: 'auto',
             permanent: false,
@@ -213,8 +217,8 @@ ajaxGet(url, function (reponse) {
           icon: myIconLibreBonus,
           title: station.number
         }).on('click', function () {
-          var StationFormulaire6 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire");
-          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation">plus de détails</a>', {
+          var StationFormulaire6 = new StationFormulaire(mymap, station, "fenetreStation", "fenetrereservation", "formulaire", "#presentationMessage");
+          markersCluster.bindPopup('<h3> Station:</h3>' + station.name + '<br/> <a href="#fenetreStation"Réserver</a>', {
             offset: L.point(-5, 0),
             direction: 'auto',
             permanent: false,
@@ -234,4 +238,4 @@ ajaxGet(url, function (reponse) {
 //-------------Initialisation:----------/
 
 mymap.addLayer(markersCluster);
-sessionStorage.temps = 0;
+//sessionStorage.temps = 0;
