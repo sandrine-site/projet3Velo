@@ -7,17 +7,17 @@
 function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStation, idformulaire, idMessage) {
 
   // len=longueur de la liste des position de la souris dans le canvas
-  this.eltHtmlPresentation = eltHtmlPresentation,
-    this.eltHtmlMessage = eltHtmlMessage,
-    this.idreservation = idreservation,
-    this.idStation = idStation,
-    this.idformulaire = idformulaire;
-  this.idMessage = idMessage,
-    validPlus = 0;
-
+  this.eltHtmlPresentation = eltHtmlPresentation;
+  this.eltHtmlMessage = eltHtmlMessage;
+  this.idreservation = idreservation;
+  this.idStation = idStation;
+  this.idformulaire = idformulaire;
+  this.idMessage = idMessage;
+  var millis;
+  var myDate;
   this.ecrireMessage = function (nom, prenom, load) {
-    if (load === 0) {
-      //on verifie que les chapms sont remplis
+    //on verifie que les chapms sont remplis
+    if (load) {
       if (len === 0) {
         document.getElementById("signature").style.border = " 2px solid red";
       } else if (nom == "") {
@@ -33,47 +33,52 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
         localStorage.prenom = prenom;
         myDate = Date.now();
         sessionStorage.setItem('dateReservation', myDate);
-        console.log(myDate)
+        localStorage.station_reserv = localStorage.station_name;
+        document.getElementById(this.eltHtmlPresentation).style.display = "block";
+        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
+        millis = Date.now() - myDate;
+        diminuerCompteur();
       }
-      localStorage.station_reserv = localStorage.station_name;
+    } else {
+
+      myDate = sessionStorage.dateReservation;
+      document.getElementById(this.eltHtmlPresentation).style.display = "block";
+      document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
+      millis = Date.now() - myDate;
+      diminuerCompteur();
     }
-    myDate = sessionStorage.dateReservation
-    document.getElementById(this.eltHtmlPresentation).style.display = "block";
-    document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
-    millis = Date.now() - myDate;
-    diminuerCompteur();
   }
-  var millis
-  var myDate
+
   diminuerCompteur = function () {
-    if (millis <= 12000) {
+    if (millis < 1200000) {
       setTimeout(function () {
         millis = Date.now() - myDate;
-        console.log("seconds elapsed = " + Math.floor(millis / 1000));
-        this.tempsLitteral(1200000 - millis);
-        console.log(this.tempsLitteral(1200000 - millis));
-        document.getElementById(idMessage).innerHTML = this.tempsLitteral(120000 - millis);
-        diminuerCompteur();
+        tempsLitteral(1200000 - millis);
+        document.getElementById(idMessage).innerHTML = tempsLitteral(1200000 - millis);
+        diminuerCompteur(millis);
       }, 1000);
+    } else {
+      sessionStorage.dateReservation = 0;
+      myDate = 0;
     }
-
-
-    this.tempsLitteral = function (milliSeconde) {
-      var s, m, seconde
-      seconde = Math.floor(milliSeconde / 1000)
-      s = seconde % 60,
-        texteSec = "";
-      texteSec = (s === 0) ? " </h3>" : (s + " s.</h3>");
-      m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
-      var tm = m,
-        texteMin = "";
-      texteMin = (tm === 0) ? "<h3>il vous reste : " : "<h3>il vous reste : " + m + " min.";
-      var textetemps = (s + tm !== 0) ? texteMin + texteSec : " <h3>le temps est écoulé votre réservation a été annulée.</h3>";
-
-      return textetemps;
-    };
   }
+
+
+  tempsLitteral = function (milliSeconde) {
+    var s, m, seconde;
+    var textetemps = "";
+    seconde = Math.floor(milliSeconde / 1000)
+    s = seconde % 60,
+      texteSec = "";
+    texteSec = (s === 0) ? " </h3>" : (s + " s.</h3>");
+    m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
+    texteMin = "";
+    texteMin = (m === 0) ? "<h3>il vous reste : " : "<h3>il vous reste : " + m + " min.";
+    textetemps = (s + m >= 0) ? texteMin + texteSec : " <h3>le temps est écoulé votre réservation a été annulée.</h3>";
+    return textetemps;
+  };
 };
+
 //};
 ////Lancement de la fonction signature(init) quand tous est prêt
 //var textetemps = "";

@@ -18,11 +18,11 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
   var clickX = new Array();
   var clickY = new Array();
   var clickDrag = new Array();
-
+  var context
   //Initialisation du canvas
   this.Initialisation = function () {
     var canvas = document.getElementById(this.canvasId);
-    var context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
 
     //on définit les carractéristiques du trait
     context.lineWidth = this.lineWidth;
@@ -116,38 +116,15 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
       }
       return;
     };
-
-    NouvelleSignature.clearCanvas = function (context) {
-      var body = document.getElementById("body");
-      var canvas = document.getElementById("signature");
-      var context = canvas.getContext("2d");
-      var dessin = document.getElementById("dessin");
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      clickX = [];
-      clickY = [];
-      clickDrag = [];
-    }
-
-    //Validation du formulaire et affichage du message de confirmation
-
-    var form = document.querySelector("form");
-    form.addEventListener("reset", function (e) {
-      signature.clearCanvas(context);
-      validPlus = 0;
-      document.getElementById("nom").placeholder = '';
-      document.getElementById("prenom").placeholder = '';
-    });
-    form.addEventListener("submit", function (e) {
-      sessionStorage.temps = 100;
-      e.preventDefault();
-      validPlus = (validPlus + 1);
-      var nom = form.elements["nom"].value;
-      var prenom = form.elements["prenom"].value;
-      signature.clearCanvas;
-
-      messageAfficheFin.ecrireMessage(nom, prenom, 0);
-
-    });
   }
 
-};
+  this.clearCanvas = function () {
+    var canvas = document.getElementById(this.canvasId);
+    context = canvas.getContext("2d");
+
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    clickX = [];
+    clickY = [];
+    clickDrag = [];
+  };
+}

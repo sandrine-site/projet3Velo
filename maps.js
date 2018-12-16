@@ -83,19 +83,17 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
       sessionStorage.station_name = this.station.name;
       sessionStorage.station_Velos = this.station.available_bikes;
 
-    } else if (Date.now() - sessionStorage.dateReservation <= 12000) {
-      messageAfficheFin.ecrireMessage(localStorage.nom, localStorage.prenom, 1);
-      if (sessionStorage.station_name === this.station.name) {
-        veloDispo = this.station.available_bikes - 1;
-      }
-      document.getElementById(this.eltHtmlStation).innerHTML += "<h3> Attention, vous avez déjà une réservation en cours, une nouvelle réservation entrainera une annulation de la précédente.<h3>";
+    } else if (sessionStorage.station_name === this.station.name) {
+      veloDispo = this.station.available_bikes - 1;
       this.faireReservation();
-
       // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
       sessionStorage.station_name = this.station.name;
       sessionStorage.station_Velos = this.station.available_bikes;
     } else {
       this.faireReservation();
+      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
+      sessionStorage.station_name = this.station.name;
+      sessionStorage.station_Velos = this.station.available_bikes;
     }
   }
   // fonction qui affiche le formulaire si besoin et determine ce qu'il faut afficher dans le formulaire

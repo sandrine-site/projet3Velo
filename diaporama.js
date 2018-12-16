@@ -168,7 +168,6 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
   }, false);
 
   touchsurface.addEventListener('touchend', function (e) {
-    console.log(e)
     touchobj = e.changedTouches[0];
     distX = touchobj.pageX - startX; // mesure la distanceparcourue par le doigt
     tempsEcoule = new Date().getTime() - startTime // temps Ecoulé
