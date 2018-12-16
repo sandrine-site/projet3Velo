@@ -16,9 +16,10 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
   var millis;
   var myDate;
   this.ecrireMessage = function (nom, prenom, load) {
+    console.log(click)
     //on verifie que les chapms sont remplis
     if (load) {
-      if (len === 0) {
+      if (click === 0) {
         document.getElementById("signature").style.border = " 2px solid red";
       } else if (nom == "") {
         document.getElementById("nom").style.border = " 2px solid red";
@@ -26,6 +27,7 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
         document.getElementById("prenom").style.border = " 2px solid red";
       } else {
         // Si le formulaire est valide on stoque le nom et le prenom dans une variable locale on efface le formulaire
+        signature.clearCanvas();
         document.getElementById(idreservation).style.display = "none";
         document.getElementById(idStation).style.display = "none";
         document.getElementById(idformulaire).style.display = "none";

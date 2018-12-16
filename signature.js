@@ -1,9 +1,8 @@
 //initialisation des variables
 var localStorage;
 var sessionStorage;
-var len;
 var validPlus = 0;
-
+var click
 // définition de la class nouvelle signature
 //canvasId  id du canvas définit dans le HTML
 //typeImput       mousse ou touch
@@ -101,6 +100,7 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
     //à chaque appel de la fonction dessiner on efface le context et on redessine tout
     NouvelleSignature.dessiner = function (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      click = clickX.length
       for (var i = 0; i < clickX.length; i++) {
         context.beginPath();
         if (clickDrag[i] && i) {
@@ -112,7 +112,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
         context.stroke();
-        len = clickX.length;
       }
       return;
     };
@@ -126,5 +125,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
     clickX = [];
     clickY = [];
     clickDrag = [];
+    click = 0
   };
 }
