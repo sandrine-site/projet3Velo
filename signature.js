@@ -56,7 +56,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
     // si le stylo est appuyé et est dans le canvas on dessine (glissement)
 
     canvas.addEventListener("mousemove", function (e) {
-      console.log(e);
       e.preventDefault();
       if (stylo === true) {
         clickX.push(e.pageX - canvas.offsetLeft);
@@ -77,7 +76,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
     //Evenements tactiles
     // moment où le doigt touche l'écran
     canvas.addEventListener("touchstart", function (e) {
-      console.log(e);
       stylo = true;
       e.preventDefault();
       clickX.push(e.changedTouches[0].pageX - canvas.offsetLeft);
@@ -87,12 +85,10 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
     }, false);
     canvas.addEventListener("touchmove", function (e) {
       e.preventDefault();
-      console.log(e);
       if (stylo === true) {
         for (var i = 0; i < e.touches.length; i++) {
           clickX.push(e.targetTouches[i].pageX - canvas.offsetLeft);
           clickY.push((e.targetTouches[i].pageY - canvas.offsetTop));
-          console.log(clickX[i] + " y: " + clickY[i])
           clickDrag.push(true);
         }
         NouvelleSignature.dessiner(context);
@@ -104,10 +100,8 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
 
     //à chaque appel de la fonction dessiner on efface le context et on redessine tout
     NouvelleSignature.dessiner = function (context) {
-      console.log(clickX + " y: " + clickY + " drag " + clickDrag)
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       for (var i = 0; i < clickX.length; i++) {
-        console.log(clickX[i] + " y: " + clickY[i] + clickDrag[i])
         context.beginPath();
         if (clickDrag[i] && i) {
           context.moveTo(clickX[i - 1], clickY[i - 1]);
@@ -150,8 +144,10 @@ function NouvelleSignature(canvasId, lineWidth, lineColor) {
       var nom = form.elements["nom"].value;
       var prenom = form.elements["prenom"].value;
       signature.clearCanvas;
+      var Timestamp2 = new Date().getTime()
+      var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", "messageTemps");
       messageAfficheFin.ecrireMessage(nom, prenom);
-      messageAfficheFin.diminuerCompteur(parseInt(sessionStorage.temps));
+
     });
   }
 
