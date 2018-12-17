@@ -27,7 +27,7 @@ bleu clair:                     #88c5d6
 /* --------------------------------------- */
 /*
 grands écrants          >1320 px
-tablettes               700<largeur<1320
+tablettes               701<largeur<1320
 smartphones             <700 px (feuille de style séparée)
 /*
 
@@ -37,7 +37,7 @@ smartphones             <700 px (feuille de style séparée)
 /*---------------------------------------- */
 
 
-@media all and (min-width: 700px) {
+@media all and (min-width: 701px) {
   body {
     font-family: 'Raleway', sans-serif;
     margin: auto;
@@ -46,11 +46,9 @@ smartphones             <700 px (feuille de style séparée)
     background-color: #3e3f49;
     background: url(../images/velo.jpg);
     background-position: top;
-    width: 100%;
     background-attachment: fixed;
     height: auto;
     background-size: cover;
-    background-attachment: fixed;
     padding-bottom: 50px;
 
   }
@@ -65,13 +63,14 @@ smartphones             <700 px (feuille de style séparée)
     font-family: 'Cinzel Decorative', cursive;
   }
 
+
   @media all and (min-width: 1320px) {
     body: {
       background: url(../images/velo.jpg);
     }
   }
 
-  @media all and (min-width: 700px) and (max-width: 1320px) {
+  @media all and (min-width: 701px) and (max-width: 1320px) {
     body {
       background: url(../images/fond_tablette.jpg);
       background-size: cover;
@@ -82,6 +81,7 @@ smartphones             <700 px (feuille de style séparée)
   /* ---------------------------------------- */
   /* ==                HEADER                */
   /*---------------------------------------- */
+
   header {
     background-color: #363530;
     background-position: top;
@@ -142,7 +142,6 @@ smartphones             <700 px (feuille de style séparée)
     width: 80%;
     margin-right: 50px;
     float: right;
-    align-self: end;
     margin-left: 20%
   }
 
@@ -155,8 +154,7 @@ smartphones             <700 px (feuille de style séparée)
     margin-right: auto;
     width: 74%;
     outline: 4px outset rgba(54, 53, 48, 0.77);
-    box-shadow: 4px 4px 2px 0px #363530;
-
+    box-shadow: 4px 4px 2px 0 #363530;
   }
 
   ul {
@@ -196,18 +194,19 @@ smartphones             <700 px (feuille de style séparée)
     }
   }
 
+  .explications {
+    display: flex;
+  }
+
   figcaption p,
   #caption p {
     font-size: 1.8em;
     color: #363530;
     margin-top: 0;
     padding: 30px;
+    width: 126%;
   }
 
-  figure img {
-    width: 25%;
-    margin-left: 16%;
-  }
 
   figcaption {
     width: 46%
@@ -223,22 +222,25 @@ smartphones             <700 px (feuille de style séparée)
     background-repeat: no-repeat;
   }
 
-
-
   #slide5 figcaption p {
     display: block;
     animation: linear defile 3s;
+    animation-iteration-count: 1;
     animation-delay: 15s;
     margin-left: 0%;
     text-align: left;
-    animation-fill-mode: backwards;
+  }
+
+  #slide5 figure img {
+    width: 22%;
+    margin-left: 20%;
+    height: 160px;
   }
 
   #slide1 {
     background: linear-gradient(#b7bcc5, transparent, transparent), url(../images/image1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    justify-content: flex-start;
     display: flex;
     flex-direction: column;
     align-content: flex-start;
@@ -248,9 +250,9 @@ smartphones             <700 px (feuille de style séparée)
 
     display: block;
     animation: linear defile 3s;
+    animation-iteration-count: 1;
     margin-left: 0%;
     text-align: left;
-    animation-fill-mode: backwards;
   }
 
   #slide2 {
@@ -267,9 +269,16 @@ smartphones             <700 px (feuille de style séparée)
 
     display: block;
     animation: linear defile 3s;
+    animation-iteration-count: 1;
     animation-delay: 5s;
     margin-left: 0%;
     text-align: left;
+  }
+
+  #slide2 figure img {
+    width: 22%;
+    margin-left: 20%;
+    height: 160px;
   }
 
   #slide3 {
@@ -283,9 +292,16 @@ smartphones             <700 px (feuille de style séparée)
 
     display: block;
     animation: linear defile 3s;
+    animation-iteration-count: 1;
     animation-delay: 10s;
     margin-left: 0%;
     text-align: left;
+  }
+
+  #slide3 figure img {
+    width: 22%;
+    margin-left: 20%;
+    height: 160px;
   }
 
   #slide4 {
@@ -298,24 +314,80 @@ smartphones             <700 px (feuille de style séparée)
 
     display: block;
     animation: linear defile 3s;
+    animation-iteration-count: 1;
     animation-delay: 15s;
     margin-left: 0%;
     text-align: left;
   }
 
+  #slide4 figure img {
+    width: 22%;
+    margin-left: 20%;
+    height: 160px;
+  }
+
   @media all and (min-width: 1320px) {
+    .explications {
+      margin-left: 11px;
+      width: 100%;
+    }
+
     .explications figure {
       width: 20%;
       margin-top: -16%;
       margin-left: 67%;
     }
+
+    .explications figure img {
+      width: 22%;
+      margin-left: 20%;
+      height: 160px;
+    }
+
   }
 
-  @media all and (min-width: 700px) and (max-width: 1320px) {
+  @media all and (min-width: 701px) and (max-width: 1320px) {
     .explications figure {
       width: 35%;
       margin-top: -10%;
     }
+
+    .explications figcaption p,
+    #caption p {
+      width: 100%;
+      padding: 10px;
+    }
+
+    #slide2 figure img {
+      width: 150px;
+      margin-left: 17%;
+      height: 100px;
+    }
+
+    #slide3 figure img {
+      width: 150px;
+      margin-left: 17%;
+      height: 100px;
+    }
+
+    #slide4 figure img {
+      width: 150px;
+      margin-left: 17%;
+      height: 100px;
+    }
+
+    #slide5 figure img {
+      width: 150px;
+      margin-left: 17%;
+      height: 100px;
+    }
+
+    .explications figure img {
+      width: 51%;
+      margin-left: 16%;
+      height: 110px;
+    }
+
   }
 
   /*-------Boutons de commandes------------*/
@@ -439,11 +511,12 @@ smartphones             <700 px (feuille de style séparée)
     display: flex;
     justify-content: flex-start;
     width: 80%;
+
   }
 
   #map {
     width: 70%;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     padding-top: 80px;
     background-color: #363530;
     margin-top: -40px;
@@ -485,7 +558,7 @@ smartphones             <700 px (feuille de style séparée)
     text-align: left;
     padding: 0;
     margin: 0 0 0 10px;
-
+    width: 165%;
   }
 
   .colonne {
@@ -494,15 +567,17 @@ smartphones             <700 px (feuille de style séparée)
     flex-direction: column;
   }
 
-  figure {
+  #Glegende figure {
     display: flex;
     justify-content: flex-start;
     padding: 0;
+    margin: 15px 0 0 0;
   }
 
   #Glegende figure img {
     width: 31px;
     height: 31px;
+    margin-left: 0;
   }
 
   @media all and (min-width: 1320px) {
@@ -520,7 +595,7 @@ smartphones             <700 px (feuille de style séparée)
     }
   }
 
-  @media all and (min-width: 700px) and (max-width: 1320px) {
+  @media all and (min-width: 701px) and (max-width: 1320px) {
     #presentationmaps {
 
       margin: auto;
@@ -532,7 +607,8 @@ smartphones             <700 px (feuille de style séparée)
     #map {
 
       min-width: 500px;
-      height: 590px;
+      height: 640px;
+      margin-right: 6%;
     }
 
     #mapid {
@@ -622,11 +698,11 @@ smartphones             <700 px (feuille de style séparée)
     }
   }
 
-  @media all and (min-width: 700px) and (max-width: 1320px) {
+  @media all and (min-width: 701px) and (max-width: 1320px) {
     #fenetrereservation {
 
       min-width: 312px;
-      margin-left: -9%;
+      margin-left: -23%;
       margin-top: -11%;
     }
   }
@@ -666,7 +742,7 @@ smartphones             <700 px (feuille de style séparée)
 
   #presentationMessage h3 {
     font-size: 1.2em;
-
+    width: 75%;
   }
 
   #presentationMessage p {
@@ -678,16 +754,16 @@ smartphones             <700 px (feuille de style séparée)
     #presentationMessage {
 
       width: 55%;
-      margin-top: -11px;
-      margin-right: 12%;
+      margin-top: -166px;
+      margin-right: 20%;
     }
   }
 
-  @media all and (min-width: 700px) and (max-width: 1320px) {
+  @media all and (min-width: 701px) and (max-width: 1320px) {
     #presentationMessage {
 
       width: 68%;
-      margin-top: -35px;
+      margin-top: -157px;
       margin-right: 20%;
     }
 

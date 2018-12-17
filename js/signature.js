@@ -1,33 +1,39 @@
-var localStorage;
-var sessionStorage;
-var len;
+//---------------------------calss Nouvelle Signature------------------------------//
 
-// définition de la class nouvelle signature
-//canvasId  id du canvas définit dans le HTML
-//typeImput       mousse ou touch
-//lineWidth       épaisseur du tracé
-// color          couleur du tracé
-function NouvelleSignature(canvasId, typeInput, lineWidth, color) {
-  this.canvasId = canvasId,
-    this.typeInput = typeInput,
-    this.lineWidth = lineWidth,
-    this.color = color;
+//Sert à afficher la signature dans le canvas
+//canvasId                     id du canvas définit dans le HTML
+//lineWidth                    épaisseur du tracé
+// linecolor                   couleur du tracé
+// click                       nombre de déplacement comptabilisé sur la surface canvas
+
+
+function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
+
+  this.canvasId = canvasId;
+  this.lineWidth = lineWidth;
+  this.lineColor = lineColor;
+  this.click = click
   var stylo;
   var clickX = new Array();
   var clickY = new Array();
   var clickDrag = new Array();
+  var context
 
+  //on stoque le nombre de click dans session storage afin de pouvoir le réutiliser
+  sessionStorage.click = 0
+
+
+  //Initialisation du canvas
   this.Initialisation = function () {
-
     var canvas = document.getElementById(this.canvasId);
-    var context = canvas.getContext("2d");
+    context = canvas.getContext("2d");
 
     //on définit les carractéristiques du trait
     context.lineWidth = this.lineWidth;
     context.lineCap = "round";
     context.lineJoin = "round";
-    context.strokeStyle = this.color;
-
+    context.strokeStyle = this.lineColor;
+    // au cas où..
     if (!canvas) {
       alert("Impossible de récupérer le canvas");
       return;
@@ -37,185 +43,102 @@ function NouvelleSignature(canvasId, typeInput, lineWidth, color) {
       return;
     }
 
-    var x;
-    var y;
+    //----------- Evenements souris-----------------//
 
-    //Evenements souris
     canvas.addEventListener("mousedown", function (e) {
       e.preventDefault();
       stylo = true;
+      // on compléte la liste de coordonées
       clickX.push(e.pageX - canvas.offsetLeft);
       clickY.push(e.pageY - canvas.offsetTop);
       clickDrag.push(false);
-      NouvelleSignature.dessiner(context);
-      e.preventDefault();
+      // permet de dessiner un point
+      signature.dessiner(context);
       e.stopPropagation();
     });
-    // si le stylo est appuyé et dans le canvas on dessine (glissement)
+
+    // si le stylo est appuyé et est dans le canvas on dessine (glissement)
     canvas.addEventListener("mousemove", function (e) {
       e.preventDefault();
       if (stylo === true) {
         clickX.push(e.pageX - canvas.offsetLeft);
         clickY.push(e.pageY - canvas.offsetTop);
         clickDrag.push(true);
-        NouvelleSignature.dessiner(context);
+        signature.dessiner(context);
       }
     });
-    //stylo = pointe du stylo si =true =click souris =>on ecrit
+
+    //Si le stylo est dans la feuille mais que la pointe est en l'air
     canvas.addEventListener("mouseup", function () {
       stylo = false;
-    });
-    // si le stylo sort de la zonne canvas on arrete le dessin
+    }, false);
+
+    // si le stylo sort de la zonne canvas
     canvas.addEventListener("mouseleave", function () {
       stylo = false;
-    });
+    }, false);
 
-    //Evenements tactiles
+    //    -----------Evenements tactiles-----------//
 
+    // instant où le doigt touche l'écran
     canvas.addEventListener("touchstart", function (e) {
       stylo = true;
       e.preventDefault();
-      clickX.push(e.pageX - canvas.offsetLeft);
-      clickY.push(e.pageY - canvas.offsetTop);
+      clickX.push(e.changedTouches[0].pageX - canvas.offsetLeft);
+      clickY.push(e.changedTouches[0].pageY - canvas.offsetTop);
       clickDrag.push(false);
-      NouvelleSignature.dessiner(context)
+
+      this.dessiner(context);
     }, false);
+    // le doigt bouge sur avec l'écran
     canvas.addEventListener("touchmove", function (e) {
       e.preventDefault();
       if (stylo === true) {
-        clickX.push(e.pageX - canvas.offsetLeft);
-        clickY.push(e.pageY - canvas.offsetTop);
-        clickDrag.push(true);
-        NouvelleSignature.dessiner(context);
-
+        for (var i = 0; i < e.touches.length; i++) {
+          clickX.push(e.targetTouches[i].pageX - canvas.offsetLeft);
+          clickY.push((e.targetTouches[i].pageY - canvas.offsetTop));
+          clickDrag.push(true);
+        }
+        this.dessiner(context);
       }
     }, false);
+
+    // le doigt n'est plus en contact avec l'écran
     canvas.addEventListener("touchend", function (e) {
-      stylo = false
-    }, false);
-    canvas.addEventListener("touchleave", function (e) {
-      stylo = false
+      stylo = false;
     }, false);
 
-    //à chaque appel de la fonction dessiner on efface le context et on redessine tout
-    NouvelleSignature.dessiner = function (context) {
+
+    // à chaque appel de la méthode dessiner on efface le context et on redessine tout
+    this.dessiner = function (context) {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      this.click = clickX.length;
       for (var i = 0; i < clickX.length; i++) {
         context.beginPath();
         if (clickDrag[i] && i) {
           context.moveTo(clickX[i - 1], clickY[i - 1]);
         } else {
+
           //dessine 1 point
           context.moveTo(clickX[i] - 1, clickY[i]);
         }
         context.lineTo(clickX[i], clickY[i]);
         context.closePath();
         context.stroke();
-        len = clickX.length;
       }
+      sessionStorage.click = this.click;
       return;
     };
-
-    this.clearCanvas = function (context) {
-      context.clearRect(0, 0, 250, 250);
-      clickX = [];
-      clickY = [];
-      clickDrag = [];
-      len = 0;
-    };
-
-    //Validation du formulaire et affichage du message de confirmation
-
-    var form = document.querySelector("form");
-    form.addEventListener("reset", function () {
-      signature.clearCanvas(context);
-      validPlus = validPlus + 1;
-      document.getElementById("nom").placeholder = '';
-      document.getElementById("prenom").placeholder = '';
-    });
-    form.addEventListener("submit", function (e) {
-      sessionStorage.temps = 1200;
-      e.preventDefault();
-      var nom = form.elements["nom"].value;
-      var prenom = form.elements["prenom"].value;
-      signature.clearCanvas;
-      messageAfficheFin.ecrireMessage(nom, prenom);
-      messageAfficheFin.diminuerCompteur(parseInt(sessionStorage.temps));
-    });
-  }
-
-};
-//Validation du formulaire par l'utilisateur
-//objet MessageFin:
-// eltHtmlPresentation       element où s'affiche le message de fin
-//temps                      temps entre la réservation et l'annulation
-
-function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStation, idformulaire, validPlus, idMessage) {
-  // len=longueur de la liste des position de la souris pour écrire
-  this.eltHtmlPresentation = eltHtmlPresentation,
-    this.eltHtmlMessage = eltHtmlMessage,
-    this.idreservation = idreservation,
-    this.idStation = idStation,
-    this.idformulaire = idformulaire;
-  this.validPlus = validPlus,
-    this.idMessage = idMessage,
-
-    this.ecrireMessage = function (nom, prenom) {
-      if (len === 0) {
-        document.getElementById("signature").style.border = " 2px solid red";
-      } else if (nom == "") {
-        document.getElementById("nom").style.border = " 2px solid red";
-      } else if (prenom == "") {
-        document.getElementById("prenom").style.border = " 2px solid red";
-      } else {
-        // Si le formulaire est valide on stoque le nom et le prenom dans une variable locale 
-        document.getElementById(idreservation).style.display = "none";
-        document.getElementById(idStation).style.display = "none";
-        document.getElementById(idformulaire).style.display = "none";
-        localStorage.nom = nom;
-        localStorage.prenom = prenom;
-        document.getElementById(this.eltHtmlPresentation).style.display = "block";
-        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + " " + localStorage.nom + " </h3>";
-      };
-    }
-
-  //décompte du temps qu'il reste
-
-  this.diminuerCompteur = function (temps) {
-    if (temps > 0 && this.validPlus === 1) {
-      temps = temps - 1;
-      sessionStorage.temps = temps;
-      document.getElementById(idMessage).innerHTML = this.tempsLitteral(temps);
-      sout = setTimeout("messageAfficheFin.diminuerCompteur(" + temps + ")", 1000);
-    } else {
-      clearInterval
-      this.validPlus = 1;
-    }
   };
 
-  this.tempsLitteral = function (seconde) {
-    var s, m
-    s = seconde % 60;
-    m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
-
-    if (m !== 0) {
-      if (s !== 0) {
-        textetemps = "<h3>il vous reste : " + m + " min." + s + " s.</h3>"
-      } else {
-        textetemps = "<h3>il vous reste : " + m + " min.</h3>"
-      }
-    } else {
-      if (s !== 0) {
-        textetemps = "<h3>il vous reste : " + s + " s.</h3>"
-      } else {
-        textetemps = "<h3>le temps est écoulé votre réservation a été annulée.</h3>"
-      };
-    }
-    return textetemps;
-  }
+  // methode clearCanvas sert à éffacer le canvas
+  this.clearCanvas = function () {
+    var canvas = document.getElementById(this.canvasId);
+    context = canvas.getContext("2d");
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    clickX = [];
+    clickY = [];
+    clickDrag = [];
+    sessionStorage.click = 0;
+  };
 }
-//Lancement de la fonction signature (init) quand tous est prêt
-var signature = new NouvelleSignature("canvas", "mouse", 1.5, "#3364fe");
-window.onload = signature.Initialisation();
-var textetemps = ""
-var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", 0, "messageTemps");

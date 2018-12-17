@@ -1,13 +1,16 @@
-//on définit la classe slider cette classe contient les constantes:
-//l'id du slider
-//le temps de chaque diapo en ms
-//la largeur du slider en pourcent
-//le nombre d'images du slider
-//l'id des controles
-// + des constantes internes
-//
+//-----------------Class slider--------------------------------//
 
-function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, IdTouch, document) {
+//on fixe comme constantes de départ:
+//id                                  l'id du slider
+//temps                               le temps de chaque diapo en ms
+//largeurPourcent                     la largeur du slider en pourcent
+//nbImages                            le nombre d'images du slider
+//idControl                           l'id des contrôles
+//idAvance                   flecheavance
+//idRecul                    flecherecul
+//document                             document
+
+function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, document) {
   // definition des constantes
 
   this.id = id,
@@ -180,33 +183,4 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
     }
   }.bind(this), false);
 
-  // ne fonctionne pas????
-  //  touchsurface.addEventListener("swiperight", function (e) {
-  //    this.moveRight;
-  //    e.preventDefault;
-  //    e.stopPropagation();
-  //  })
-  //  touchsurface.addEventListener("swipeleft", function (e) {
-  //    this.moveLeft;
-  //    e.preventDefault;
-  //    e.stopPropagation();
-  //  })
 }
-
-//----------initialisation-----------//
-
-//on fixe comme constantes de départ:
-//l'id du slider                      ici #slider
-//le temps de chaque diapo en ms      ici 5000
-//la largeur du slider en pourcent    ici 50
-//le nombre d'images du slider        ici 4
-//l'id des controles                  ici #control
-//                                    #flecheavance
-//                                    #flecherecul
-
-var slider = new Slider("slider", 5000, 50, 5, "#control", "#flecheavance", "#flecherecul", "touchsurface",
-  document);
-var play = 1;
-var entreDeux;
-slider.taille();
-slider.imageReste();
