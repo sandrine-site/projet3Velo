@@ -13,16 +13,16 @@
 function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRecul, document) {
   // definition des constantes
 
-  this.id = id,
-    this.temps = temps,
-    this.largeurPourcent = largeurPourcent,
-    this.nbImages = nbImages,
-    this.idControl = idControl,
-    this.idAvance = idAvance,
-    this.idRecul = IdRecul,
-    this.document = document;
+  this.id = id;
+  this.temps = temps;
+  this.largeurPourcent = largeurPourcent;
+  this.nbImages = nbImages;
+  this.idControl = idControl;
+  this.idAvance = idAvance;
+  this.idRecul = IdRecul;
+  this.document = document;
 
-  // deffinition des différentes methodes
+  // definition des différentes methodes
 
   // enfants du silder:
   Slider.prototype.enfantUn = function () {
@@ -182,5 +182,4 @@ function Slider(id, temps, largeurPourcent, nbImages, idControl, idAvance, IdRec
       }
     }
   }.bind(this), false);
-
 }

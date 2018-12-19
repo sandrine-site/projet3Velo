@@ -1,4 +1,4 @@
-//---------------------------calss Nouvelle Signature------------------------------//
+//---------------------------class Nouvelle Signature------------------------------//
 
 //Sert à afficher la signature dans le canvas
 //canvasId                     id du canvas définit dans le HTML
@@ -12,7 +12,7 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
   this.canvasId = canvasId;
   this.lineWidth = lineWidth;
   this.lineColor = lineColor;
-  this.click = click
+  this.click = click;
   var stylo;
   var clickX = new Array();
   var clickY = new Array();
@@ -53,9 +53,9 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
       clickY.push(e.pageY - canvas.offsetTop);
       clickDrag.push(false);
       // permet de dessiner un point
-      signature.dessiner(context);
+      this.dessiner(context);
       e.stopPropagation();
-    });
+    }.bind(this));
 
     // si le stylo est appuyé et est dans le canvas on dessine (glissement)
     canvas.addEventListener("mousemove", function (e) {
@@ -64,9 +64,9 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
         clickX.push(e.pageX - canvas.offsetLeft);
         clickY.push(e.pageY - canvas.offsetTop);
         clickDrag.push(true);
-        signature.dessiner(context);
+        this.dessiner(context);
       }
-    });
+    }.bind(this));
 
     //Si le stylo est dans la feuille mais que la pointe est en l'air
     canvas.addEventListener("mouseup", function () {
@@ -87,9 +87,8 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
       clickX.push(e.changedTouches[0].pageX - canvas.offsetLeft);
       clickY.push(e.changedTouches[0].pageY - canvas.offsetTop);
       clickDrag.push(false);
-
       this.dessiner(context);
-    }, false);
+    }.bind(this), false);
     // le doigt bouge sur avec l'écran
     canvas.addEventListener("touchmove", function (e) {
       e.preventDefault();
@@ -101,7 +100,7 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
         }
         this.dessiner(context);
       }
-    }, false);
+    }.bind(this), false);
 
     // le doigt n'est plus en contact avec l'écran
     canvas.addEventListener("touchend", function (e) {
@@ -126,7 +125,6 @@ function NouvelleSignature(canvasId, lineWidth, lineColor, click) {
         context.closePath();
         context.stroke();
       }
-      sessionStorage.click = this.click;
       return;
     };
   };

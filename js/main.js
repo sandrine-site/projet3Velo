@@ -2,7 +2,7 @@
 var localStorage;
 var sessionStorage;
 
-//-----------------Instanciation du slider--------------------------------//
+//-----------------Instantiation du slider--------------------------------//
 //-----------------fichier:diaporama.js----------------------------------//
 //on fixe comme constantes de départ:
 //l'id du slider                      ici #slider
@@ -20,7 +20,7 @@ var entreDeux;
 slider.taille();
 slider.imageReste();
 
-//----------------Instanciation de la class MessageFin-----------------------//
+//----------------Instantiation de la class MessageFin-----------------------//
 //----------------fichier:message_fin.js------------------------------------//
 
 //EltHtmlPresentation                     presentationMessage
@@ -35,7 +35,7 @@ slider.imageReste();
 var messageAfficheFin = new MessageFin("presentationMessage", "message", "fenetrereservation", "fenetreStation", "formulaire", "messageTemps", "Glegende", "canvas");
 
 
-//-----------Instanciation de la calss Nouvelle Signature------------------------------//
+//-----------Instantiation de la calss Nouvelle Signature------------------------------//
 //----------------fichier:signature.js---------------------------------------------//
 //
 //canvasId                     canvas
@@ -50,27 +50,39 @@ signature.Initialisation();
 
 
 
-//-----------Instanciation de la calss ValidWindow------------------------------//
+//-----------Instantiation de la calss ValidWindow------------------------------//
 //----------------fichier:valid.js---------------------------------------------//
 //
 //idStation                     fenetreStation
 //idNom                         nom
 // idPrenom                     prenom
+//idSignature                   canvas
 
-var valid = new ValidWindow("fenetreStation", "nom", "prenom");
+var valid = new ValidWindow("fenetreStation", "nom", "prenom", "canvas", "form");
 
 // Lors du chargement de la fenetre on regarde si il y a une déjà une réservation auquel cas on affiche le message
 
-window.addEventListener("load", valid.StartFunction(parseInt(sessionStorage.click), localStorage.nom, localStorage.prenom));
+window.addEventListener("load", function () {
+  valid.StartFunction();
+  valid.ResetFunction();
+});
 
 //Validation du formulaire et affichage du message de confirmation
 
 var form = document.querySelector("form");
+
 form.addEventListener("reset", function (e) {
-  e.preventDefault
-  valid.ResetFunction()
+  e.preventDefault;
+  e.stopPropagation;
+  valid.ResetFunction();
+  window.location.href = "#fenetrereservation";
+  return false;
 });
 form.addEventListener("submit", function (e) {
-  e.preventDefault
-  valid.ValidFunction("nom", "prenom", parseInt(sessionStorage.click))
+
+  e.preventDefault;
+  var nom = document.formulaire.elements.nom.value;
+  var prenom = document.formulaire.elements.prenom.value;
+  valid.ValidFunction(signature.click, nom, prenom);
+
 });

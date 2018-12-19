@@ -67,10 +67,10 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
 
     if (sessionStorage.station_name === this.station.name) {
       document.getElementById(this.eltHtmlStation).innerHTML = '';
-      document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/>' + (this.station.available_bikes - 1) + ' vélos disponibles </p>';
+      document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/></p>' + '<div id=veloDispo>' + (this.station.available_bikes - 1) + ' vélos disponibles </div>';
     } else {
       document.getElementById(this.eltHtmlStation).innerHTML = '';
-      document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/>' + this.station.available_bikes + ' vélos disponibles </p>';
+      document.getElementById(this.eltHtmlStation).innerHTML += '<h3> Détail de la station : ' + this.station.name + '</h3><p>Adresse : ' + this.station.address + '<br/><br/>' + this.station.bike_stands + ' places </li><br/></p>' + '<div id=veloDispo>' + +this.station.available_bikes + ' vélos disponibles </div>';
     }
     var veloDispo = this.station.available_bikes;
     document.getElementById(this.eltHtmlStation).style.display = "block";
@@ -81,22 +81,11 @@ function StationFormulaire(mymap, station, eltHtmlStation, eltHtmlReservation, e
     } else if (veloDispo === 0) {
       document.getElementById(this.eltHtmlStation).innerHTML += "<h3>Il n'y a pas de vélo disponible à cette station.<h3>";
       document.getElementById(this.eltHtmlFormulaire).style.display = "none";
-    } else if (veloDispo != 0 && sessionStorage.temps == 0) {
-      this.faireReservation();
+    } else if (veloDispo != 0) {
       // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
       sessionStorage.station_name = this.station.name;
       sessionStorage.station_Velos = this.station.available_bikes;
-    } else if (sessionStorage.station_name === this.station.name) {
-      veloDispo = this.station.available_bikes - 1;
       this.faireReservation();
-      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
-      sessionStorage.station_name = this.station.name;
-      sessionStorage.station_Velos = this.station.available_bikes;
-    } else {
-      this.faireReservation();
-      // stokage des variables station.Name et station.available_bikes dans une SessionStorage.
-      sessionStorage.station_name = this.station.name;
-      sessionStorage.station_Velos = this.station.available_bikes;
     }
   };
 
@@ -220,7 +209,6 @@ ajaxGet(url, function (reponse) {
           }).addLayer(addMarker);
           StationFormulaire5.afficheForm();
         });
-
         markersCluster.addLayer(addMarker);
 
       } else if (station.available_bikes > 5 && station.bonus === true) {

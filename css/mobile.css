@@ -88,7 +88,7 @@ smartphones             <700 px (feuille de style séparée)
     flex-direction: column;
     align-content: center;
     align-items: center;
-    //z.index: 3;
+    z-index: 3;
     width: 100%;
   }
 
@@ -106,7 +106,7 @@ smartphones             <700 px (feuille de style séparée)
       0 3px 5px rgba(0, 0, 0, .2),
       0 5px 10px rgba(0, 0, 0, .2),
       0 20px 20px rgba(0, 0, 0, .15);
-    //z.index: 3;
+    z-index: 3;
   }
 
   #slider {

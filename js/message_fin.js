@@ -27,40 +27,30 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
   var myDate;
 
 
-  this.ecrireMessage = function (click, nom, prenom, load) {
-    //on verifie que les champs sont remplis
-    if (load) {
-      if (click === 0) {
-        document.getElementById(this.idSignature).style.border = " 2px solid red";
-      } else if (nom == "") {
-        document.getElementById("nom").style.border = " 2px solid red";
-      } else if (prenom == "") {
-        document.getElementById("prenom").style.border = " 2px solid red";
-      } else {
-        // Si le formulaire est valide on stocke le nom et le prenom dans une variable locale on efface le formulaire
-        signature.clearCanvas();
-        document.getElementById(idreservation).style.display = "none";
-        document.getElementById(idStation).style.display = "none";
-        document.getElementById(idformulaire).style.display = "none";
-        document.getElementById(idpresentation).style.display = "none";
-        localStorage.nom = nom;
-        localStorage.prenom = prenom;
-        myDate = Date.now();
-        sessionStorage.setItem('dateReservation', myDate);
-        localStorage.station_reserv = localStorage.station_name;
-        document.getElementById(this.eltHtmlPresentation).style.display = "block";
-        document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + '&nbsp;' + localStorage.nom + " </h3>";
-        millis = Date.now() - myDate;
-        diminuerCompteur();
-      }
-    } else {
-      document.getElementById(idpresentation).style.display = "none";
-      myDate = sessionStorage.dateReservation;
-      document.getElementById(this.eltHtmlPresentation).style.display = "block";
-      document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + '&nbsp;' + localStorage.nom + " </h3>";
-      millis = Date.now() - myDate;
-      diminuerCompteur();
-    }
+  this.ecrireMessage = function () {
+
+    document.getElementById(this.idpresentation).style.display = "none";
+    localStorage.station_reserv = localStorage.station_name;
+    document.getElementById(this.eltHtmlPresentation).style.display = "block";
+    signature.clearCanvas();
+    sessionStorage.dateReservation = Date.now();
+    document.getElementById(idreservation).style.display = "none";
+    document.getElementById(idStation).style.display = "none";
+    document.getElementById(idformulaire).style.display = "none";
+    document.getElementById("veloDispo").innerHTML = (sessionStorage.station_Velos) + ' vélos disponibles </div>';
+    document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + '&nbsp;' + localStorage.nom + " </h3>";
+    myDate = parseInt(sessionStorage.dateReservation);
+    millis = Date.now() - myDate;
+    diminuerCompteur();
+  }
+  this.ecrireLoad = function () {
+    document.getElementById(this.idpresentation).style.display = "none";
+    document.getElementById(this.eltHtmlPresentation).style.display = "block";
+    document.getElementById(this.eltHtmlMessage).innerHTML = "<h3>Vélo réservé à la station " + sessionStorage.station_name + " par " + localStorage.prenom + '&nbsp;' + localStorage.nom + " </h3>";
+    myDate = parseInt(sessionStorage.dateReservation);
+    millis = Date.now() - myDate;
+    diminuerCompteur();
+    document.getElementById("veloDispo").innerHTML = (sessionStorage.station_Velos) + ' vélos disponibles </div>';
   }
 
   diminuerCompteur = function () {
@@ -84,9 +74,9 @@ function MessageFin(eltHtmlPresentation, eltHtmlMessage, idreservation, idStatio
     var texteMin = "";
     seconde = Math.floor(milliSeconde / 1000);
     s = seconde % 60;
-    texteSec = (s === 0) ? " </h3>" : (s + " &nbsp;s.</h3>");
+    texteSec = (s === 0) ? " </h3>" : (s + "&nbsp;s.</h3>");
     m = seconde >= 60 ? Math.floor(seconde / 60 % 60) : 0;
-    texteMin = (m === 0) ? "<h3>il vous reste : " : "<h3>il vous reste :" + " " + m + " &nbsp;" + "min.";
+    texteMin = (m === 0) ? "<h3>il vous reste : " : "<h3>il vous reste :" + " " + m + "&nbsp;" + "min.";
     textetemps = (s + m >= 0) ? texteMin + texteSec : " <h3>le temps est écoulé votre réservation a été annulée.</h3>";
     return textetemps;
   };
